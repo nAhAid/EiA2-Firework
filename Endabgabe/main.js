@@ -93,6 +93,13 @@ var CustomFirework;
         size.value = _firework.size.toString();
         position.value = _position.toString();
         list.value = _array.toString();
+        CustomFirework.currentFirework.name = _firework.name;
+        CustomFirework.currentFirework.colour = _firework.colour;
+        CustomFirework.currentFirework.pattern = _firework.pattern;
+        CustomFirework.currentFirework.size = _firework.size;
+        CustomFirework.currentFirework.lifespan = _firework.lifespan;
+        CustomFirework.currentFirework.id = _firework.id;
+        CustomFirework.currentFirework.serverSaved = _firework.serverSaved;
     }
     function cutID(_id, _length) {
         let newId = _id.slice(_length);

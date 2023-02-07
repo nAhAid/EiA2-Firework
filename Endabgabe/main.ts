@@ -128,6 +128,14 @@ namespace CustomFirework {
         size.value = _firework.size.toString();
         position.value = _position.toString();
         list.value = _array.toString();
+
+        currentFirework.name = _firework.name;
+        currentFirework.colour = _firework.colour;
+        currentFirework.pattern = _firework.pattern;
+        currentFirework.size = _firework.size;
+        currentFirework.lifespan = _firework.lifespan;
+        currentFirework.id = _firework.id;
+        currentFirework.serverSaved = _firework.serverSaved;
     }
 
 
