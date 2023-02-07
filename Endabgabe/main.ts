@@ -92,7 +92,7 @@ namespace CustomFirework {
             name = item[0];
             jColour = item[1];
             colour = colours.Red;
-            
+
 
             jPattern = item[2];
             size = Number(item[3]);
@@ -127,11 +127,81 @@ namespace CustomFirework {
                     break;
                 case "White":
                     colour = colours.White;
-                    break;    
-            } 
+                    break;
+            }
             serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
         console.log(serverFirework);
+        writeServerList();
+    }
+
+
+    function writeServerList(): void {
+        let list: HTMLElement = <HTMLElement>document.querySelector("#uList");
+        list.innerHTML = "";
+
+        for (let index: number = 0; index < serverFirework.length; index++) {
+            console.log("write List");
+            list.innerHTML += "<li id=\"serverFirework" + index + "\">" + serverFirework[index].name + "</li>";
+
+        }
+
+        let serverlist: HTMLElement = <HTMLElement>document.querySelector("#serverList");
+        serverlist.addEventListener("click", handleClick);
+    }
+
+    function handleClick(_event: MouseEvent): void {
+        console.log(_event.clientX, _event.clientY);
+        let id: string = (_event.target as Element).id;
+        console.log(id);
+
+        if (id.includes("server")) {
+            if (id.includes("delete")) {
+                console.log("delte Item");
+            }
+            else {
+                let newId: number = cutID(id, 14);
+                console.log(newId);
+                useFirework(serverFirework[newId], "serverFirework", newId);
+            }
+        }
+
+    }
+
+    function useFirework(_firework: FireworkComponents, _array: string, _position: number): void {
+        let name: HTMLInputElement = <HTMLInputElement>document.querySelector("#name");
+        let colour: HTMLSelectElement = <HTMLSelectElement>document.querySelector("#colours");
+        let circle: HTMLInputElement = <HTMLInputElement>document.querySelector("#circle");
+        let star: HTMLInputElement = <HTMLInputElement>document.querySelector("#star");
+        let cross: HTMLInputElement = <HTMLInputElement>document.querySelector("#cross");
+        let lifespan: HTMLInputElement = <HTMLInputElement>document.querySelector("#lifespan");
+        let size: HTMLInputElement = <HTMLInputElement>document.querySelector("#size");
+        let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
+        let list: HTMLInputElement = <HTMLInputElement>document.querySelector("#list");
+        
+
+        if (_firework.pattern == Pattern.circle) {
+            circle.checked = true;
+        }
+        else if (_firework.pattern == Pattern.star) {
+            star.checked = true;
+        }
+        else if (_firework.pattern == Pattern.cross) {
+            cross.checked = true;
+        }
+
+        name.value = _firework.name;
+        colour.value = _firework.colour.name;
+        lifespan.value = _firework.lifespan.toString();
+        size.value = _firework.size.toString();
+        position.value = _position.toString();
+        list.value = _array.toString();
+    }
+
+
+    function cutID(_id: string, _length: number): number {
+        let newId: string = _id.slice(_length);
+        return parseInt(newId);
     }
 
 

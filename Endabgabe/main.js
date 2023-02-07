@@ -98,6 +98,62 @@ var CustomFirework;
             CustomFirework.serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
         console.log(CustomFirework.serverFirework);
+        writeServerList();
+    }
+    function writeServerList() {
+        let list = document.querySelector("#uList");
+        list.innerHTML = "";
+        for (let index = 0; index < CustomFirework.serverFirework.length; index++) {
+            console.log("write List");
+            list.innerHTML += "<li id=\"serverFirework" + index + "\">" + CustomFirework.serverFirework[index].name + "</li>";
+        }
+        let serverlist = document.querySelector("#serverList");
+        serverlist.addEventListener("click", handleClick);
+    }
+    function handleClick(_event) {
+        console.log(_event.clientX, _event.clientY);
+        let id = _event.target.id;
+        console.log(id);
+        if (id.includes("server")) {
+            if (id.includes("delete")) {
+                console.log("delte Item");
+            }
+            else {
+                let newId = cutID(id, 14);
+                console.log(newId);
+                useFirework(CustomFirework.serverFirework[newId], "serverFirework", newId);
+            }
+        }
+    }
+    function useFirework(_firework, _array, _position) {
+        let name = document.querySelector("#name");
+        let colour = document.querySelector("#colours");
+        let circle = document.querySelector("#circle");
+        let star = document.querySelector("#star");
+        let cross = document.querySelector("#cross");
+        let lifespan = document.querySelector("#lifespan");
+        let size = document.querySelector("#size");
+        let position = document.querySelector("#position");
+        let list = document.querySelector("#list");
+        if (_firework.pattern == CustomFirework.Pattern.circle) {
+            circle.checked = true;
+        }
+        else if (_firework.pattern == CustomFirework.Pattern.star) {
+            star.checked = true;
+        }
+        else if (_firework.pattern == CustomFirework.Pattern.cross) {
+            cross.checked = true;
+        }
+        name.value = _firework.name;
+        colour.value = _firework.colour.name;
+        lifespan.value = _firework.lifespan.toString();
+        size.value = _firework.size.toString();
+        position.value = _position.toString();
+        list.value = _array.toString();
+    }
+    function cutID(_id, _length) {
+        let newId = _id.slice(_length);
+        return parseInt(newId);
     }
     function handleInputChange(_event) {
         console.log("InputChange");
