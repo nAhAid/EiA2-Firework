@@ -93,7 +93,10 @@ namespace CustomFirework {
             jColour = item[1];
             console.log("J Colour");
             console.log(jColour);
-                
+            colour = colours.Red;
+            console.log("Colour Var");
+            console.log(colour);
+
             jPattern = item[2];
             size = Number(item[3]);
             lifespan = Number(item[4]);
@@ -104,34 +107,32 @@ namespace CustomFirework {
             console.log(jPattern);
             if (jPattern.includes("circle")) {
                 pattern = Pattern.circle;
-            }  
-            else if (jPattern.includes("star")) {
+            }
+            if (jPattern.includes("star")) {
                 pattern = Pattern.star;
-            }   
-            else if (jPattern.includes("cross")) {
+            }
+            if (jPattern.includes("cross")) {
                 pattern = Pattern.cross;
-            }  
-            
-            if (jColour = "Yellow") {
-                colour = colours.Yellow;
-            }
-            else if (jColour = "Red") {
-                colour = colours.Yellow;
-            }
-            else if (jColour = "Blue") {
-                colour = colours.Yellow;
-            }
-            else if (jColour = "Green") {
-                colour = colours.Yellow;
-            }
-            else if (jColour = "White") {
-                colour = colours.Yellow;
-            }
-            else {
-                colour = colours.Red;
             }
 
-
+            switch (jColour) {
+                case "Yellow":
+                    colour = colours.Yellow;
+                    break;
+                case "Red":
+                    colour = colours.Red;
+                    break;
+                case "Blue":
+                    colour = colours.Blue;
+                    break;
+                case "Green":
+                    colour = colours.Green;
+                    break;
+                case "White":
+                    colour = colours.White;
+                    break;    
+            }
+            console.log(colour);  
             serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
         console.log(serverFirework);
