@@ -91,11 +91,8 @@ namespace CustomFirework {
 
             name = item[0];
             jColour = item[1];
-            console.log("J Colour");
-            console.log(jColour);
             colour = colours.Red;
-            console.log("Colour Var");
-            console.log(colour);
+            
 
             jPattern = item[2];
             size = Number(item[3]);
@@ -131,8 +128,7 @@ namespace CustomFirework {
                 case "White":
                     colour = colours.White;
                     break;    
-            }
-            console.log(colour);  
+            } 
             serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
         console.log(serverFirework);

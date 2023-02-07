@@ -62,11 +62,7 @@ var CustomFirework;
             let serverSaved;
             name = item[0];
             jColour = item[1];
-            console.log("J Colour");
-            console.log(jColour);
-            colour = CustomFirework.colours.jColour;
-            console.log("Colour");
-            console.log(colour);
+            colour = CustomFirework.colours.Red;
             jPattern = item[2];
             size = Number(item[3]);
             lifespan = Number(item[4]);
@@ -76,11 +72,28 @@ var CustomFirework;
             if (jPattern.includes("circle")) {
                 pattern = CustomFirework.Pattern.circle;
             }
-            else if (jPattern.includes("star")) {
+            if (jPattern.includes("star")) {
                 pattern = CustomFirework.Pattern.star;
             }
-            else if (jPattern.includes("cross")) {
+            if (jPattern.includes("cross")) {
                 pattern = CustomFirework.Pattern.cross;
+            }
+            switch (jColour) {
+                case "Yellow":
+                    colour = CustomFirework.colours.Yellow;
+                    break;
+                case "Red":
+                    colour = CustomFirework.colours.Red;
+                    break;
+                case "Blue":
+                    colour = CustomFirework.colours.Blue;
+                    break;
+                case "Green":
+                    colour = CustomFirework.colours.Green;
+                    break;
+                case "White":
+                    colour = CustomFirework.colours.White;
+                    break;
             }
             CustomFirework.serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
