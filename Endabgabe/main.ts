@@ -37,6 +37,8 @@ namespace CustomFirework {
     async function handleLoad() {
         let create: HTMLDivElement = <HTMLDivElement>document.getElementById("create");
         create.addEventListener("change", getInput);
+        let save: HTMLInputElement = <HTMLInputElement>document.querySelector("#save");
+        save.addEventListener("click", handleSaveButton);
 
 
         drawBackground();
@@ -63,10 +65,11 @@ namespace CustomFirework {
             let pattern: Pattern = patterns[value.pattern];
             let size: number = value.size;
             let lifespan: number = value.lifespan;
-            let id: string = value.id;
+            let id: string = key;
             let serverSaved: boolean = value.serverSaved;
             serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
+        console.log(serverFirework);
         writeServerList();
     }
 
@@ -97,7 +100,7 @@ namespace CustomFirework {
                 useFirework(serverFirework[newId], "serverFirework", newId);
             }
         }
-        
+
 
     }
 
@@ -109,8 +112,8 @@ namespace CustomFirework {
         let cross: HTMLInputElement = <HTMLInputElement>document.querySelector("#cross");
         let lifespan: HTMLInputElement = <HTMLInputElement>document.querySelector("#lifespan");
         let size: HTMLInputElement = <HTMLInputElement>document.querySelector("#size");
-        let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
-        let list: HTMLInputElement = <HTMLInputElement>document.querySelector("#list");
+        //let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
+        let id: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
 
         if (_firework.pattern == Pattern.circle) {
             circle.checked = true;
@@ -126,8 +129,7 @@ namespace CustomFirework {
         colour.value = _firework.colour.name;
         lifespan.value = _firework.lifespan.toString();
         size.value = _firework.size.toString();
-        position.value = _position.toString();
-        list.value = _array.toString();
+        id.value = _firework.id;
 
         currentFirework.name = _firework.name;
         currentFirework.colour = _firework.colour;
@@ -169,4 +171,25 @@ namespace CustomFirework {
         cc2.fillRect(0, 0, cc2.canvas.width, cc2.canvas.height);
         cc2.closePath();
     }
+
+    function handleSaveButton(): void {
+        console.log("save Button");
+        if (currentFirework.name == "") {
+            alert("Fill in Name!");
+        }
+        else {
+            let id: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
+            
+            for (let firework of serverFirework) {
+                if (firework.id == id.value) {
+                    console.log("Update List");
+                }
+                
+            }
+        }
+
+
+
+    }
+
 }

@@ -6,7 +6,7 @@ var CustomFirework;
         colour;
         size;
         lifespan;
-        expendable = false;
+        expandable = false;
         iLifetime = 1;
         constructor(_position, _colour, _size, _lifespan) {
             this.position = _position.copy();
@@ -20,7 +20,7 @@ var CustomFirework;
                 this.iLifetime++;
             }
             else {
-                this.expendable = true;
+                this.expandable = true;
             }
         }
     }

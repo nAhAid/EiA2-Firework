@@ -20,6 +20,8 @@ var CustomFirework;
     async function handleLoad() {
         let create = document.getElementById("create");
         create.addEventListener("change", getInput);
+        let save = document.querySelector("#save");
+        save.addEventListener("click", handleSaveButton);
         drawBackground();
         background = CustomFirework.cc2.getImageData(0, 0, CustomFirework.cc2.canvas.width, CustomFirework.cc2.canvas.height);
         getInput();
@@ -41,10 +43,11 @@ var CustomFirework;
             let pattern = CustomFirework.patterns[value.pattern];
             let size = value.size;
             let lifespan = value.lifespan;
-            let id = value.id;
+            let id = key;
             let serverSaved = value.serverSaved;
             CustomFirework.serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
+        console.log(CustomFirework.serverFirework);
         writeServerList();
     }
     function writeServerList() {
@@ -76,8 +79,8 @@ var CustomFirework;
         let cross = document.querySelector("#cross");
         let lifespan = document.querySelector("#lifespan");
         let size = document.querySelector("#size");
-        let position = document.querySelector("#position");
-        let list = document.querySelector("#list");
+        //let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
+        let id = document.querySelector("#uniqueId");
         if (_firework.pattern == CustomFirework.Pattern.circle) {
             circle.checked = true;
         }
@@ -91,8 +94,7 @@ var CustomFirework;
         colour.value = _firework.colour.name;
         lifespan.value = _firework.lifespan.toString();
         size.value = _firework.size.toString();
-        position.value = _position.toString();
-        list.value = _array.toString();
+        id.value = _firework.id;
         CustomFirework.currentFirework.name = _firework.name;
         CustomFirework.currentFirework.colour = _firework.colour;
         CustomFirework.currentFirework.pattern = _firework.pattern;
@@ -125,6 +127,20 @@ var CustomFirework;
         CustomFirework.cc2.fillStyle = "black";
         CustomFirework.cc2.fillRect(0, 0, CustomFirework.cc2.canvas.width, CustomFirework.cc2.canvas.height);
         CustomFirework.cc2.closePath();
+    }
+    function handleSaveButton() {
+        console.log("save Button");
+        if (CustomFirework.currentFirework.name == "") {
+            alert("Fill in Name!");
+        }
+        else {
+            let id = document.querySelector("#uniqueId");
+            for (let firework of CustomFirework.serverFirework) {
+                if (firework.id == id.value) {
+                    console.log("Update List");
+                }
+            }
+        }
     }
 })(CustomFirework || (CustomFirework = {}));
 //# sourceMappingURL=main.js.map

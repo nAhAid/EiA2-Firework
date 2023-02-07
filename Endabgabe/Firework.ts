@@ -4,7 +4,7 @@ namespace CustomFirework {
         colour: Colour;
         size: number;
         lifespan: number;
-        expendable: boolean = false;
+        expandable: boolean = false;
         iLifetime: number = 1;
 
         constructor(_position: Vector, _colour: Colour, _size: number, _lifespan: number) {
@@ -23,7 +23,7 @@ namespace CustomFirework {
             }
 
             else {
-                this.expendable = true;
+                this.expandable = true;
             }
         }
 
