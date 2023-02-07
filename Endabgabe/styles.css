@@ -1,0 +1,12 @@
+#create {
+    width: 500px;
+    height: 550px;
+
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
