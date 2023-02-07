@@ -93,11 +93,7 @@ namespace CustomFirework {
             jColour = item[1];
             console.log("J Colour");
             console.log(jColour);
-            
-            colour = colours.jColour;
-            console.log("Colour");
-            console.log(colour);
-            
+                
             jPattern = item[2];
             size = Number(item[3]);
             lifespan = Number(item[4]);
@@ -114,7 +110,26 @@ namespace CustomFirework {
             }   
             else if (jPattern.includes("cross")) {
                 pattern = Pattern.cross;
-            }     
+            }  
+            
+            if (jColour = "Yellow") {
+                colour = colours.Yellow;
+            }
+            else if (jColour = "Red") {
+                colour = colours.Yellow;
+            }
+            else if (jColour = "Blue") {
+                colour = colours.Yellow;
+            }
+            else if (jColour = "Green") {
+                colour = colours.Yellow;
+            }
+            else if (jColour = "White") {
+                colour = colours.Yellow;
+            }
+            else {
+                colour = colours.Red;
+            }
 
 
             serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
