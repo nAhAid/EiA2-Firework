@@ -58,13 +58,9 @@ namespace CustomFirework {
 
         for (let key of keys) {
             let value: ServerFireworkComponents = _data.data[key];
-            console.log(value);
             let name: string = value.name;
             let colour: Colour = colours[value.colour];
-            console.log(colour);
-            console.log(colours["yellow"]);
             let pattern: Pattern = patterns[value.pattern];
-            console.log(pattern);
             let size: number = value.size;
             let lifespan: number = value.lifespan;
             let id: string = value.id;
@@ -92,7 +88,7 @@ namespace CustomFirework {
     function handleClick(_event: MouseEvent): void {
         let id: string = (_event.target as Element).id;
 
-        if (id.includes("server")) {
+        if (id.includes("Firework")) {
             if (id.includes("delete")) {
                 console.log("delete Item");
             }
@@ -101,6 +97,7 @@ namespace CustomFirework {
                 useFirework(serverFirework[newId], "serverFirework", newId);
             }
         }
+        
 
     }
 
@@ -155,6 +152,7 @@ namespace CustomFirework {
         currentFirework.pattern = pattern;
         currentFirework.lifespan = Number(lifespan.value);
         currentFirework.size = Number(size.value);
+        console.log(currentFirework);
     }
 
 

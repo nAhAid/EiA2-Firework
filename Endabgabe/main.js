@@ -36,13 +36,9 @@ var CustomFirework;
         let keys = Object.keys(_data.data);
         for (let key of keys) {
             let value = _data.data[key];
-            console.log(value);
             let name = value.name;
             let colour = CustomFirework.colours[value.colour];
-            console.log(colour);
-            console.log(CustomFirework.colours["yellow"]);
             let pattern = CustomFirework.patterns[value.pattern];
-            console.log(pattern);
             let size = value.size;
             let lifespan = value.lifespan;
             let id = value.id;
@@ -62,7 +58,7 @@ var CustomFirework;
     }
     function handleClick(_event) {
         let id = _event.target.id;
-        if (id.includes("server")) {
+        if (id.includes("Firework")) {
             if (id.includes("delete")) {
                 console.log("delete Item");
             }
@@ -115,6 +111,7 @@ var CustomFirework;
         CustomFirework.currentFirework.pattern = pattern;
         CustomFirework.currentFirework.lifespan = Number(lifespan.value);
         CustomFirework.currentFirework.size = Number(size.value);
+        console.log(CustomFirework.currentFirework);
     }
     function drawBackground() {
         CustomFirework.cc2.beginPath();
