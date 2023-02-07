@@ -15,24 +15,13 @@ namespace CustomFirework {
     export let explosives: Firework[] = [];
 
     interface Data {
-        [id: number]: FireworkComponents[];
+        [id: string]: ServerFireworkComponents;
     }
 
     interface ReturnedJSON {
         status: string;
         data: Data;
     }
-
-    /* 
-        currentFirework = {
-            name: "Redstar",
-            colour: colours[1],
-            pattern: Pattern.circle,
-            size: 1,
-            lifespan: 100,
-            id: "",
-            serverSaved: true
-        }; */
 
 
     currentFirework = {
@@ -41,22 +30,18 @@ namespace CustomFirework {
         pattern: Pattern.cross,
         size: 0,
         lifespan: 0,
-        id: "HALLO",
+        id: "",
         serverSaved: false
     };
 
     async function handleLoad() {
-        console.log("start");
-
         let create: HTMLDivElement = <HTMLDivElement>document.getElementById("create");
-        create.addEventListener("change", handleInputChange);
+        create.addEventListener("change", getInput);
 
 
         drawBackground();
         background = cc2.getImageData(0, 0, cc2.canvas.width, cc2.canvas.height);
-        //console.log(currentFirework.pattern);
-        console.log(colours.Yellow);
-
+        getInput();
         await requestList();
     }
 
@@ -64,74 +49,28 @@ namespace CustomFirework {
         let response: Response = await fetch(url + "?command=find&collection=Firework");
         let list: string = await response.text();
         let data: ReturnedJSON = JSON.parse(list);
-        console.log(data);
         generateServerlist(data);
     }
 
-    function generateServerlist(_data: ReturnedJSON) {
-        console.log("generate Serverlist");
-
+    function generateServerlist(_data: ReturnedJSON): void {
         serverFirework = [];
         let keys: string[] = Object.keys(_data.data);
-        let values: string[] = Object.values(_data.data);
 
-
-        for (let index: number = 0; index < keys.length; index++) {
-
-            let item: string[] = Object.values(values[index]);
-            let name: string;
-            let jColour: string;
-            let colour: Colour;
-            let jPattern: string;
-            let pattern: Pattern = Pattern.cross;
-            let size: number;
-            let lifespan: number;
-            let id: string;
-            let serverSaved: boolean;
-
-            name = item[0];
-            jColour = item[1];
-            colour = colours.Red;
-
-
-            jPattern = item[2];
-            size = Number(item[3]);
-            lifespan = Number(item[4]);
-            id = keys[index];
-            serverSaved = JSON.parse(item[6]);
-
-
-            console.log(jPattern);
-            if (jPattern.includes("circle")) {
-                pattern = Pattern.circle;
-            }
-            if (jPattern.includes("star")) {
-                pattern = Pattern.star;
-            }
-            if (jPattern.includes("cross")) {
-                pattern = Pattern.cross;
-            }
-
-            switch (jColour) {
-                case "Yellow":
-                    colour = colours.Yellow;
-                    break;
-                case "Red":
-                    colour = colours.Red;
-                    break;
-                case "Blue":
-                    colour = colours.Blue;
-                    break;
-                case "Green":
-                    colour = colours.Green;
-                    break;
-                case "White":
-                    colour = colours.White;
-                    break;
-            }
+        for (let key of keys) {
+            let value: ServerFireworkComponents = _data.data[key];
+            console.log(value);
+            let name: string = value.name;
+            let colour: Colour = colours[value.colour];
+            console.log(colour);
+            console.log(colours["yellow"]);
+            let pattern: Pattern = patterns[value.pattern];
+            console.log(pattern);
+            let size: number = value.size;
+            let lifespan: number = value.lifespan;
+            let id: string = value.id;
+            let serverSaved: boolean = value.serverSaved;
             serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
-        console.log(serverFirework);
         writeServerList();
     }
 
@@ -141,7 +80,7 @@ namespace CustomFirework {
         list.innerHTML = "";
 
         for (let index: number = 0; index < serverFirework.length; index++) {
-            console.log("write List");
+
             list.innerHTML += "<li id=\"serverFirework" + index + "\">" + serverFirework[index].name + "</li>";
 
         }
@@ -151,17 +90,14 @@ namespace CustomFirework {
     }
 
     function handleClick(_event: MouseEvent): void {
-        console.log(_event.clientX, _event.clientY);
         let id: string = (_event.target as Element).id;
-        console.log(id);
 
         if (id.includes("server")) {
             if (id.includes("delete")) {
-                console.log("delte Item");
+                console.log("delete Item");
             }
             else {
                 let newId: number = cutID(id, 14);
-                console.log(newId);
                 useFirework(serverFirework[newId], "serverFirework", newId);
             }
         }
@@ -178,7 +114,6 @@ namespace CustomFirework {
         let size: HTMLInputElement = <HTMLInputElement>document.querySelector("#size");
         let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
         let list: HTMLInputElement = <HTMLInputElement>document.querySelector("#list");
-        
 
         if (_firework.pattern == Pattern.circle) {
             circle.checked = true;
@@ -205,8 +140,21 @@ namespace CustomFirework {
     }
 
 
-    function handleInputChange(_event: Event): void {
-        console.log("InputChange");
+    function getInput(): void {
+        let name: HTMLInputElement = <HTMLInputElement>document.querySelector("#name");
+        let jColour: HTMLSelectElement = <HTMLSelectElement>document.querySelector("#colours");
+        let lifespan: HTMLInputElement = <HTMLInputElement>document.querySelector("#lifespan");
+        let size: HTMLInputElement = <HTMLInputElement>document.querySelector("#size");
+        let htmlPattern: HTMLInputElement = <HTMLInputElement>document.querySelector("input[name=\"pattern\"]:checked");
+
+        let colour: Colour = colours[jColour.value.toString()];
+        let pattern: Pattern = patterns[htmlPattern!.value];
+
+        currentFirework.name = name.value;
+        currentFirework.colour = colour;
+        currentFirework.pattern = pattern;
+        currentFirework.lifespan = Number(lifespan.value);
+        currentFirework.size = Number(size.value);
     }
 
 
