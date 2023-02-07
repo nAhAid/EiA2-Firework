@@ -163,8 +163,6 @@ namespace CustomFirework {
         console.log(currentFirework);
     }
 
-
-
     function drawBackground(): void {
         cc2.beginPath();
         cc2.fillStyle = "black";
