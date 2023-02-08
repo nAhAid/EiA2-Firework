@@ -418,7 +418,6 @@ namespace CustomFirework {
 
     function handleCanvasClick(_event: MouseEvent): void {    
         if (currentFirework.pattern == Pattern.circle) {
-            console.log("Create Cirlce");
             let position: Vector = new Vector(_event.clientX - cc2.canvas.offsetLeft, _event.clientY - cc2.canvas.offsetTop);
 
             let circleFirework: Circle = new Circle(position, currentFirework.colour, currentFirework.size, currentFirework.lifespan);
@@ -427,7 +426,6 @@ namespace CustomFirework {
         }
 
         if (currentFirework.pattern == Pattern.star) {
-            console.log("Create Star");
             let position: Vector = new Vector(_event.clientX - cc2.canvas.offsetLeft, _event.clientY - cc2.canvas.offsetTop);
 
             let starFirework: Star = new Star(position, currentFirework.colour, currentFirework.size, currentFirework.lifespan);
@@ -436,7 +434,6 @@ namespace CustomFirework {
         }
 
         if (currentFirework.pattern == Pattern.cross) {
-            console.log("Create Star");
             let position: Vector = new Vector(_event.clientX - cc2.canvas.offsetLeft, _event.clientY - cc2.canvas.offsetTop);
 
             let crossFirework: Cross = new Cross(position, currentFirework.colour, currentFirework.size, currentFirework.lifespan);

@@ -6,7 +6,6 @@ namespace CustomFirework {
         }
 
         draw(): void {
-            console.log("Draw Cross");
             let radiusParticle: number = 1 * this.size / 10;
             let cross: number = 1;
 

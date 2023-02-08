@@ -326,21 +326,18 @@ var CustomFirework;
     }
     function handleCanvasClick(_event) {
         if (CustomFirework.currentFirework.pattern == CustomFirework.Pattern.circle) {
-            console.log("Create Cirlce");
             let position = new CustomFirework.Vector(_event.clientX - CustomFirework.cc2.canvas.offsetLeft, _event.clientY - CustomFirework.cc2.canvas.offsetTop);
             let circleFirework = new CustomFirework.Circle(position, CustomFirework.currentFirework.colour, CustomFirework.currentFirework.size, CustomFirework.currentFirework.lifespan);
             circleFirework.draw();
             CustomFirework.explosives.push(circleFirework);
         }
         if (CustomFirework.currentFirework.pattern == CustomFirework.Pattern.star) {
-            console.log("Create Star");
             let position = new CustomFirework.Vector(_event.clientX - CustomFirework.cc2.canvas.offsetLeft, _event.clientY - CustomFirework.cc2.canvas.offsetTop);
             let starFirework = new CustomFirework.Star(position, CustomFirework.currentFirework.colour, CustomFirework.currentFirework.size, CustomFirework.currentFirework.lifespan);
             starFirework.draw();
             CustomFirework.explosives.push(starFirework);
         }
         if (CustomFirework.currentFirework.pattern == CustomFirework.Pattern.cross) {
-            console.log("Create Star");
             let position = new CustomFirework.Vector(_event.clientX - CustomFirework.cc2.canvas.offsetLeft, _event.clientY - CustomFirework.cc2.canvas.offsetTop);
             let crossFirework = new CustomFirework.Cross(position, CustomFirework.currentFirework.colour, CustomFirework.currentFirework.size, CustomFirework.currentFirework.lifespan);
             crossFirework.draw();

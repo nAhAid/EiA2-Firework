@@ -6,7 +6,6 @@ var CustomFirework;
             super(_position, _colour, _size, _lifespan);
         }
         draw() {
-            console.log("Draw Cross");
             let radiusParticle = 1 * this.size / 10;
             let cross = 1;
             let particle = new Path2D();
