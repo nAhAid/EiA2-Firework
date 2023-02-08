@@ -42,10 +42,12 @@ namespace CustomFirework {
         save.addEventListener("click", handleSaveButton);
         let createButton: HTMLInputElement = <HTMLInputElement>document.querySelector("#createButton");
         createButton.addEventListener("click", handleCreateButton);
+        canvas.addEventListener("click", handleCanvasClick);
 
 
         drawBackground();
         background = cc2.getImageData(0, 0, cc2.canvas.width, cc2.canvas.height);
+        window.setInterval(update, 30);
         getInput();
         await requestList();
     }
@@ -350,10 +352,10 @@ namespace CustomFirework {
                 let element: number = Number(position.value);
 
                 localFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id, serverSaved: true };
-                
+
                 htmlId.value = currentFirework.id;
                 position.value = (localFirework.length - 1).toString();
-                
+
                 console.log(localFirework);
                 wirteLocalList();
                 return;
@@ -400,6 +402,53 @@ namespace CustomFirework {
 
         let serverlist: HTMLElement = <HTMLElement>document.querySelector("#localList");
         serverlist.addEventListener("click", handleClick);
+    }
+
+
+    function handleCanvasClick(_event: MouseEvent): void {    
+        if (currentFirework.pattern == Pattern.circle) {
+            console.log("Create Cirlce");
+            let position: Vector = new Vector(_event.clientX - cc2.canvas.offsetLeft, _event.clientY - cc2.canvas.offsetTop);
+
+            let circleFirework: Circle = new Circle(position, currentFirework.colour, currentFirework.size, currentFirework.lifespan);
+            circleFirework.draw();
+            explosives.push(circleFirework);
+        }
+
+        if (currentFirework.pattern == Pattern.star) {
+            console.log("Create Star");
+            let position: Vector = new Vector(_event.clientX - cc2.canvas.offsetLeft, _event.clientY - cc2.canvas.offsetTop);
+
+            let starFirework: Star = new Star(position, currentFirework.colour, currentFirework.size, currentFirework.lifespan);
+            starFirework.draw();
+            explosives.push(starFirework);
+        }
+
+        if (currentFirework.pattern == Pattern.cross) {
+            console.log("Create Star");
+            let position: Vector = new Vector(_event.clientX - cc2.canvas.offsetLeft, _event.clientY - cc2.canvas.offsetTop);
+
+            let crossFirework: Cross = new Cross(position, currentFirework.colour, currentFirework.size, currentFirework.lifespan);
+            crossFirework.draw();
+            explosives.push(crossFirework);
+        }
+    }
+
+    function update(): void {
+        cc2.putImageData(background, 0, 0);
+        console.log("update");
+        
+        for (let explosive of explosives) { 
+            explosive.explode();
+            explosive.draw();
+        }
+        deleteExpandables();
+    }
+    function deleteExpandables(): void {
+        for (let i: number = explosives.length - 1; i >= 0; i--) {
+            if (explosives[i].expandable)
+                explosives.splice(i, 1);
+        }
     }
 
 }

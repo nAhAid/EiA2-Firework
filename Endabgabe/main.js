@@ -26,8 +26,10 @@ var CustomFirework;
         save.addEventListener("click", handleSaveButton);
         let createButton = document.querySelector("#createButton");
         createButton.addEventListener("click", handleCreateButton);
+        canvas.addEventListener("click", handleCanvasClick);
         drawBackground();
         background = CustomFirework.cc2.getImageData(0, 0, CustomFirework.cc2.canvas.width, CustomFirework.cc2.canvas.height);
+        window.setInterval(update, 30);
         getInput();
         await requestList();
     }
@@ -315,6 +317,44 @@ var CustomFirework;
         }
         let serverlist = document.querySelector("#localList");
         serverlist.addEventListener("click", handleClick);
+    }
+    function handleCanvasClick(_event) {
+        if (CustomFirework.currentFirework.pattern == CustomFirework.Pattern.circle) {
+            console.log("Create Cirlce");
+            let position = new CustomFirework.Vector(_event.clientX - CustomFirework.cc2.canvas.offsetLeft, _event.clientY - CustomFirework.cc2.canvas.offsetTop);
+            let circleFirework = new CustomFirework.Circle(position, CustomFirework.currentFirework.colour, CustomFirework.currentFirework.size, CustomFirework.currentFirework.lifespan);
+            circleFirework.draw();
+            CustomFirework.explosives.push(circleFirework);
+        }
+        if (CustomFirework.currentFirework.pattern == CustomFirework.Pattern.star) {
+            console.log("Create Star");
+            let position = new CustomFirework.Vector(_event.clientX - CustomFirework.cc2.canvas.offsetLeft, _event.clientY - CustomFirework.cc2.canvas.offsetTop);
+            let starFirework = new CustomFirework.Star(position, CustomFirework.currentFirework.colour, CustomFirework.currentFirework.size, CustomFirework.currentFirework.lifespan);
+            starFirework.draw();
+            CustomFirework.explosives.push(starFirework);
+        }
+        if (CustomFirework.currentFirework.pattern == CustomFirework.Pattern.cross) {
+            console.log("Create Star");
+            let position = new CustomFirework.Vector(_event.clientX - CustomFirework.cc2.canvas.offsetLeft, _event.clientY - CustomFirework.cc2.canvas.offsetTop);
+            let crossFirework = new CustomFirework.Cross(position, CustomFirework.currentFirework.colour, CustomFirework.currentFirework.size, CustomFirework.currentFirework.lifespan);
+            crossFirework.draw();
+            CustomFirework.explosives.push(crossFirework);
+        }
+    }
+    function update() {
+        CustomFirework.cc2.putImageData(background, 0, 0);
+        console.log("update");
+        for (let explosive of CustomFirework.explosives) {
+            explosive.explode();
+            explosive.draw();
+        }
+        deleteExpandables();
+    }
+    function deleteExpandables() {
+        for (let i = CustomFirework.explosives.length - 1; i >= 0; i--) {
+            if (CustomFirework.explosives[i].expandable)
+                CustomFirework.explosives.splice(i, 1);
+        }
     }
 })(CustomFirework || (CustomFirework = {}));
 //# sourceMappingURL=main.js.map

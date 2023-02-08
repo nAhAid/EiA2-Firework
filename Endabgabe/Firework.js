@@ -15,8 +15,7 @@ var CustomFirework;
             this.lifespan = _lifespan;
         }
         explode() {
-            console.log("Update iLifetime");
-            if (this.iLifetime <= this.lifespan) {
+            if (this.iLifetime <= this.lifespan * 10) {
                 this.iLifetime++;
             }
             else {

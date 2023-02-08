@@ -17,8 +17,7 @@ namespace CustomFirework {
         abstract draw(): void;
 
         explode(): void {
-            console.log("Update iLifetime");
-            if (this.iLifetime <= this.lifespan) {
+            if (this.iLifetime <= this.lifespan * 10) {
                 this.iLifetime++;
             }
 
