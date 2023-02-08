@@ -112,7 +112,7 @@ namespace CustomFirework {
         let cross: HTMLInputElement = <HTMLInputElement>document.querySelector("#cross");
         let lifespan: HTMLInputElement = <HTMLInputElement>document.querySelector("#lifespan");
         let size: HTMLInputElement = <HTMLInputElement>document.querySelector("#size");
-        //let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
+        let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
         let id: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
 
         if (_firework.pattern == Pattern.circle) {
@@ -130,6 +130,7 @@ namespace CustomFirework {
         lifespan.value = _firework.lifespan.toString();
         size.value = _firework.size.toString();
         id.value = _firework.id;
+        position.value = _position.toString();
 
         currentFirework.name = _firework.name;
         currentFirework.colour = _firework.colour;
@@ -178,18 +179,141 @@ namespace CustomFirework {
             alert("Fill in Name!");
         }
         else {
-            let id: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
-            
-            for (let firework of serverFirework) {
-                if (firework.id == id.value) {
-                    console.log("Update List");
+            if (checkList() == true) {
+                console.log("Update List");
+                let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
+                let element: number = Number(position.value);
+                serverFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id, serverSaved: true };
+                console.log(serverFirework);
+                sendListElement("Defined" + element, "update");
+                return;
+            }
+
+            else {
+                let name: string = currentFirework.name;
+                let colour: Colour = currentFirework.colour;
+                let pattern: Pattern = currentFirework.pattern;
+                let size: number = currentFirework.size;
+                let lifespan: number = currentFirework.lifespan;
+                let id: string = currentFirework.id;
+                let serverSaved: boolean = true;
+
+                serverFirework.push({ name, colour, pattern, size, lifespan, id, serverSaved });
+                console.log(serverFirework);
+                sendListElement("Undefined", "insert");
+                return;
+            }
+
+        }
+    }
+
+    function checkList(): Boolean {
+        let id: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
+        let saved: Boolean = false;
+        for (let firework of serverFirework) {
+            if (saved == true) {
+                return saved;
+            }
+            else {
+                if (firework.id == id.value && currentFirework.name == firework.name) {
+                    saved = true;
                 }
-                
+                else {
+                    saved = false;
+                }
+            }
+        }
+        return saved;
+    }
+
+
+
+
+
+    async function sendListElement(_element: string, _command: string): Promise<void> {
+        let name: string;
+        let colour: string;
+        let pattern: string;
+        let size: number;
+        let lifespan: number;
+        let id: string;
+        let serverSaved: boolean;
+
+
+        if (_element.includes("Defined") && _command != "delete") {
+            let newElement: number = cutID(_element, 7);
+            name = serverFirework[newElement].name;
+            colour = serverFirework[newElement].colour.name;
+            pattern = serverFirework[newElement].pattern;
+            size = serverFirework[newElement].size;
+            lifespan = serverFirework[newElement].lifespan;
+            id = serverFirework[newElement].id;
+            serverSaved = serverFirework[newElement].serverSaved;
+
+            let json: ServerFireworkComponents = ({name, colour, pattern, size, lifespan, id, serverSaved});
+
+            let query: URLSearchParams = new URLSearchParams();
+            query.set("command", _command);
+            query.set("collection", "Firework");
+            query.set("data", JSON.stringify(json));
+            console.log(JSON.stringify(json));
+            query.set("id", serverFirework[newElement].id);
+            let response: Response = await fetch(url + "?" + query.toString());
+            let responseText: string = await response.text();
+            if (responseText.includes("success")) {
+                alert("Item Updated!");
+            }
+            else {
+                alert("Error! Try again!");
             }
         }
 
+        else if (_element == "Undefined") {
+            let newElement: number = serverFirework.length - 1;
+            name = serverFirework[newElement].name;
+            colour = serverFirework[newElement].colour.name;
+            pattern = serverFirework[newElement].pattern;
+            size = serverFirework[newElement].size;
+            lifespan = serverFirework[newElement].lifespan;
+            id = serverFirework[newElement].id;
+            serverSaved = serverFirework[newElement].serverSaved;
 
+            let json: ServerFireworkComponents = ({name, colour, pattern, size, lifespan, id, serverSaved});
+        
+
+            let query: URLSearchParams = new URLSearchParams();
+            query.set("command", _command);
+            query.set("collection", "Firework");
+            query.set("data", JSON.stringify(json));
+            let response: Response = await fetch(url + "?" + query.toString());
+            let responseText: string = await response.text();
+     
+            if (responseText.includes("success")) {
+                alert("Item added!");
+            }
+            else {
+                alert("Error! Try again!");
+            }
+        }
+
+        else if (_element.includes("Defined") && _command == "delete") {
+            let newElement: number = cutID(_element, 7);
+
+            let query: URLSearchParams = new URLSearchParams();
+            query.set("command", _command);
+            query.set("collection", "Data");
+            query.set("id", serverFirework[newElement].id);
+            let response: Response = await fetch(url + "?" + query.toString());
+            let responseText: string = await response.text();
+            if (responseText.includes("success")) {
+                alert("Item delted!");
+            }
+            else {
+                alert("Error! Try again!");
+            }
+        }
+
+        requestList();
 
     }
-
 }

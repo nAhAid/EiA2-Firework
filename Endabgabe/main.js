@@ -79,7 +79,7 @@ var CustomFirework;
         let cross = document.querySelector("#cross");
         let lifespan = document.querySelector("#lifespan");
         let size = document.querySelector("#size");
-        //let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
+        let position = document.querySelector("#position");
         let id = document.querySelector("#uniqueId");
         if (_firework.pattern == CustomFirework.Pattern.circle) {
             circle.checked = true;
@@ -95,6 +95,7 @@ var CustomFirework;
         lifespan.value = _firework.lifespan.toString();
         size.value = _firework.size.toString();
         id.value = _firework.id;
+        position.value = _position.toString();
         CustomFirework.currentFirework.name = _firework.name;
         CustomFirework.currentFirework.colour = _firework.colour;
         CustomFirework.currentFirework.pattern = _firework.pattern;
@@ -134,13 +135,120 @@ var CustomFirework;
             alert("Fill in Name!");
         }
         else {
-            let id = document.querySelector("#uniqueId");
-            for (let firework of CustomFirework.serverFirework) {
-                if (firework.id == id.value) {
-                    console.log("Update List");
+            if (checkList() == true) {
+                console.log("Update List");
+                let position = document.querySelector("#position");
+                let element = Number(position.value);
+                CustomFirework.serverFirework[element] = { name: CustomFirework.currentFirework.name, colour: CustomFirework.currentFirework.colour, pattern: CustomFirework.currentFirework.pattern, size: CustomFirework.currentFirework.size, lifespan: CustomFirework.currentFirework.lifespan, id: CustomFirework.currentFirework.id, serverSaved: true };
+                console.log(CustomFirework.serverFirework);
+                sendListElement("Defined" + element, "update");
+                return;
+            }
+            else {
+                let name = CustomFirework.currentFirework.name;
+                let colour = CustomFirework.currentFirework.colour;
+                let pattern = CustomFirework.currentFirework.pattern;
+                let size = CustomFirework.currentFirework.size;
+                let lifespan = CustomFirework.currentFirework.lifespan;
+                let id = CustomFirework.currentFirework.id;
+                let serverSaved = true;
+                CustomFirework.serverFirework.push({ name, colour, pattern, size, lifespan, id, serverSaved });
+                console.log(CustomFirework.serverFirework);
+                sendListElement("Undefined", "insert");
+                return;
+            }
+        }
+    }
+    function checkList() {
+        let id = document.querySelector("#uniqueId");
+        let saved = false;
+        for (let firework of CustomFirework.serverFirework) {
+            if (saved == true) {
+                return saved;
+            }
+            else {
+                if (firework.id == id.value && CustomFirework.currentFirework.name == firework.name) {
+                    saved = true;
+                }
+                else {
+                    saved = false;
                 }
             }
         }
+        return saved;
+    }
+    async function sendListElement(_element, _command) {
+        let name;
+        let colour;
+        let pattern;
+        let size;
+        let lifespan;
+        let id;
+        let serverSaved;
+        if (_element.includes("Defined") && _command != "delete") {
+            let newElement = cutID(_element, 7);
+            name = CustomFirework.serverFirework[newElement].name;
+            colour = CustomFirework.serverFirework[newElement].colour.name;
+            pattern = CustomFirework.serverFirework[newElement].pattern;
+            size = CustomFirework.serverFirework[newElement].size;
+            lifespan = CustomFirework.serverFirework[newElement].lifespan;
+            id = CustomFirework.serverFirework[newElement].id;
+            serverSaved = CustomFirework.serverFirework[newElement].serverSaved;
+            let json = ({ name, colour, pattern, size, lifespan, id, serverSaved });
+            let query = new URLSearchParams();
+            query.set("command", _command);
+            query.set("collection", "Firework");
+            query.set("data", JSON.stringify(json));
+            console.log(JSON.stringify(json));
+            query.set("id", CustomFirework.serverFirework[newElement].id);
+            let response = await fetch(CustomFirework.url + "?" + query.toString());
+            let responseText = await response.text();
+            if (responseText.includes("success")) {
+                alert("Item Updated!");
+            }
+            else {
+                alert("Error! Try again!");
+            }
+        }
+        else if (_element == "Undefined") {
+            let newElement = CustomFirework.serverFirework.length - 1;
+            name = CustomFirework.serverFirework[newElement].name;
+            colour = CustomFirework.serverFirework[newElement].colour.name;
+            pattern = CustomFirework.serverFirework[newElement].pattern;
+            size = CustomFirework.serverFirework[newElement].size;
+            lifespan = CustomFirework.serverFirework[newElement].lifespan;
+            id = CustomFirework.serverFirework[newElement].id;
+            serverSaved = CustomFirework.serverFirework[newElement].serverSaved;
+            let json = ({ name, colour, pattern, size, lifespan, id, serverSaved });
+            let query = new URLSearchParams();
+            query.set("command", _command);
+            query.set("collection", "Firework");
+            query.set("data", JSON.stringify(json));
+            let response = await fetch(CustomFirework.url + "?" + query.toString());
+            let responseText = await response.text();
+            if (responseText.includes("success")) {
+                alert("Item added!");
+            }
+            else {
+                alert("Error! Try again!");
+            }
+        }
+        else if (_element.includes("Defined") && _command == "delete") {
+            let newElement = cutID(_element, 7);
+            let query = new URLSearchParams();
+            query.set("command", _command);
+            query.set("collection", "Data");
+            query.set("id", CustomFirework.serverFirework[newElement].id);
+            let response = await fetch(CustomFirework.url + "?" + query.toString());
+            let responseText = await response.text();
+            if (responseText.includes("success")) {
+                alert("Item delted!");
+            }
+            else {
+                alert("Error! Try again!");
+            }
+        }
+        requestList();
     }
 })(CustomFirework || (CustomFirework = {}));
 //# sourceMappingURL=main.js.map
