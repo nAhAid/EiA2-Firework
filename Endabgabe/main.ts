@@ -346,8 +346,14 @@ namespace CustomFirework {
             if (checkList(localFirework) == true) {
                 console.log("Update Local List");
                 let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
+                let htmlId: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
                 let element: number = Number(position.value);
+
                 localFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id, serverSaved: true };
+                
+                htmlId.value = currentFirework.id;
+                position.value = (localFirework.length - 1).toString();
+                
                 console.log(localFirework);
                 wirteLocalList();
                 return;

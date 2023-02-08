@@ -277,8 +277,11 @@ var CustomFirework;
             if (checkList(CustomFirework.localFirework) == true) {
                 console.log("Update Local List");
                 let position = document.querySelector("#position");
+                let htmlId = document.querySelector("#uniqueId");
                 let element = Number(position.value);
                 CustomFirework.localFirework[element] = { name: CustomFirework.currentFirework.name, colour: CustomFirework.currentFirework.colour, pattern: CustomFirework.currentFirework.pattern, size: CustomFirework.currentFirework.size, lifespan: CustomFirework.currentFirework.lifespan, id: CustomFirework.currentFirework.id, serverSaved: true };
+                htmlId.value = CustomFirework.currentFirework.id;
+                position.value = (CustomFirework.localFirework.length - 1).toString();
                 console.log(CustomFirework.localFirework);
                 wirteLocalList();
                 return;
