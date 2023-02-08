@@ -26,6 +26,8 @@ var CustomFirework;
         save.addEventListener("click", handleSaveButton);
         let createButton = document.querySelector("#createButton");
         createButton.addEventListener("click", handleCreateButton);
+        let resetButton = document.querySelector("#resetButton");
+        resetButton.addEventListener("click", handleResetButton);
         canvas.addEventListener("click", handleCanvasClick);
         drawBackground();
         background = CustomFirework.cc2.getImageData(0, 0, CustomFirework.cc2.canvas.width, CustomFirework.cc2.canvas.height);
@@ -317,6 +319,10 @@ var CustomFirework;
         }
         let serverlist = document.querySelector("#localList");
         serverlist.addEventListener("click", handleClick);
+    }
+    function handleResetButton() {
+        CustomFirework.localFirework = [];
+        wirteLocalList();
     }
     function handleCanvasClick(_event) {
         if (CustomFirework.currentFirework.pattern == CustomFirework.Pattern.circle) {

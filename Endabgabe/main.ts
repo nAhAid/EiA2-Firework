@@ -42,6 +42,9 @@ namespace CustomFirework {
         save.addEventListener("click", handleSaveButton);
         let createButton: HTMLInputElement = <HTMLInputElement>document.querySelector("#createButton");
         createButton.addEventListener("click", handleCreateButton);
+        let resetButton: HTMLInputElement = <HTMLInputElement>document.querySelector("#resetButton");
+        resetButton.addEventListener("click", handleResetButton);
+        
         canvas.addEventListener("click", handleCanvasClick);
 
 
@@ -403,6 +406,14 @@ namespace CustomFirework {
         let serverlist: HTMLElement = <HTMLElement>document.querySelector("#localList");
         serverlist.addEventListener("click", handleClick);
     }
+
+
+    function handleResetButton(): void {
+        localFirework = [];
+        wirteLocalList();
+    }
+
+
 
 
     function handleCanvasClick(_event: MouseEvent): void {    
