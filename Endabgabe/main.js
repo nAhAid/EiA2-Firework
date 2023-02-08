@@ -55,7 +55,7 @@ var CustomFirework;
         writeServerList();
     }
     function writeServerList() {
-        let list = document.querySelector("#uList");
+        let list = document.querySelector("#uListServer");
         list.innerHTML = "";
         for (let index = 0; index < CustomFirework.serverFirework.length; index++) {
             list.innerHTML += "<li id=\"serverFirework" + index + "\">" + CustomFirework.serverFirework[index].name + "</li>";
@@ -65,7 +65,16 @@ var CustomFirework;
     }
     function handleClick(_event) {
         let id = _event.target.id;
-        if (id.includes("Firework")) {
+        if (id.includes("localFirework")) {
+            if (id.includes("delete")) {
+                console.log("delete Item");
+            }
+            else {
+                let newId = cutID(id, 13);
+                useFirework(CustomFirework.localFirework[newId], "localFirework", newId);
+            }
+        }
+        else if (id.includes("serverFirework")) {
             if (id.includes("delete")) {
                 console.log("delete Item");
             }
@@ -271,7 +280,7 @@ var CustomFirework;
                 let element = Number(position.value);
                 CustomFirework.localFirework[element] = { name: CustomFirework.currentFirework.name, colour: CustomFirework.currentFirework.colour, pattern: CustomFirework.currentFirework.pattern, size: CustomFirework.currentFirework.size, lifespan: CustomFirework.currentFirework.lifespan, id: CustomFirework.currentFirework.id, serverSaved: true };
                 console.log(CustomFirework.localFirework);
-                //wirteLocalList();
+                wirteLocalList();
                 return;
             }
             else {
@@ -289,10 +298,20 @@ var CustomFirework;
                 htmlId.value = id;
                 position.value = (CustomFirework.localFirework.length - 1).toString();
                 console.log(CustomFirework.localFirework);
-                //wirteLocalList();
+                wirteLocalList();
                 return;
             }
         }
+    }
+    function wirteLocalList() {
+        console.log("Write Local List");
+        let list = document.querySelector("#uListLocal");
+        list.innerHTML = "";
+        for (let index = 0; index < CustomFirework.localFirework.length; index++) {
+            list.innerHTML += "<li id=\"localFirework" + index + "\">" + CustomFirework.localFirework[index].name + "</li>";
+        }
+        let serverlist = document.querySelector("#localList");
+        serverlist.addEventListener("click", handleClick);
     }
 })(CustomFirework || (CustomFirework = {}));
 //# sourceMappingURL=main.js.map

@@ -78,7 +78,7 @@ namespace CustomFirework {
 
 
     function writeServerList(): void {
-        let list: HTMLElement = <HTMLElement>document.querySelector("#uList");
+        let list: HTMLElement = <HTMLElement>document.querySelector("#uListServer");
         list.innerHTML = "";
 
         for (let index: number = 0; index < serverFirework.length; index++) {
@@ -94,7 +94,17 @@ namespace CustomFirework {
     function handleClick(_event: MouseEvent): void {
         let id: string = (_event.target as Element).id;
 
-        if (id.includes("Firework")) {
+        if (id.includes("localFirework")) {
+            if (id.includes("delete")) {
+                console.log("delete Item");
+            }
+            else {
+                let newId: number = cutID(id, 13);
+                useFirework(localFirework[newId], "localFirework", newId);
+            }
+        }
+        else if (id.includes("serverFirework")) {
+
             if (id.includes("delete")) {
                 console.log("delete Item");
             }
@@ -103,7 +113,6 @@ namespace CustomFirework {
                 useFirework(serverFirework[newId], "serverFirework", newId);
             }
         }
-
 
     }
 
@@ -340,7 +349,7 @@ namespace CustomFirework {
                 let element: number = Number(position.value);
                 localFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id, serverSaved: true };
                 console.log(localFirework);
-                //wirteLocalList();
+                wirteLocalList();
                 return;
             }
 
@@ -356,17 +365,35 @@ namespace CustomFirework {
 
                 let htmlId: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
                 let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
-            
+
                 localFirework.push({ name, colour, pattern, size, lifespan, id, serverSaved });
 
                 htmlId.value = id;
                 position.value = (localFirework.length - 1).toString();
-                
+
                 console.log(localFirework);
-                //wirteLocalList();
+                wirteLocalList();
                 return;
             }
 
         }
     }
+
+
+
+    function wirteLocalList(): void {
+        console.log("Write Local List");
+        let list: HTMLElement = <HTMLElement>document.querySelector("#uListLocal");
+        list.innerHTML = "";
+
+        for (let index: number = 0; index < localFirework.length; index++) {
+
+            list.innerHTML += "<li id=\"localFirework" + index + "\">" + localFirework[index].name + "</li>";
+
+        }
+
+        let serverlist: HTMLElement = <HTMLElement>document.querySelector("#localList");
+        serverlist.addEventListener("click", handleClick);
+    }
+
 }
