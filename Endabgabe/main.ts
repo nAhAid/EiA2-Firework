@@ -220,7 +220,6 @@ namespace CustomFirework {
                 sendListElement("Undefined", "insert");
                 return;
             }
-
         }
     }
 
@@ -249,10 +248,6 @@ namespace CustomFirework {
         }
         return saved;
     }
-
-
-
-
 
     async function sendListElement(_element: string, _command: string): Promise<void> {
         let name: string;
@@ -341,7 +336,6 @@ namespace CustomFirework {
 
     }
 
-
     function handleCreateButton(): void {
         console.log("create Button!");
         if (currentFirework.name == "") {
@@ -386,10 +380,8 @@ namespace CustomFirework {
                 wirteLocalList();
                 return;
             }
-
         }
     }
-
 
 
     function wirteLocalList(): void {
@@ -412,8 +404,6 @@ namespace CustomFirework {
         localFirework = [];
         wirteLocalList();
     }
-
-
 
 
     function handleCanvasClick(_event: MouseEvent): void {    
