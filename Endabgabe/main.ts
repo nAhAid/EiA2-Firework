@@ -10,9 +10,10 @@ namespace CustomFirework {
 
     export let serverFirework: FireworkComponents[];
     export let currentFirework: FireworkComponents;
-    export let localFirework: FireworkComponents[];
+    export let localFirework: FireworkComponents[] = [];
 
     export let explosives: Firework[] = [];
+    export let iLocalArray: number = 0;
 
     interface Data {
         [id: string]: ServerFireworkComponents;
@@ -25,9 +26,9 @@ namespace CustomFirework {
 
 
     currentFirework = {
-        name: "Test",
+        name: "",
         colour: colours[12],
-        pattern: Pattern.cross,
+        pattern: Pattern.circle,
         size: 0,
         lifespan: 0,
         id: "",
@@ -39,6 +40,8 @@ namespace CustomFirework {
         create.addEventListener("change", getInput);
         let save: HTMLInputElement = <HTMLInputElement>document.querySelector("#save");
         save.addEventListener("click", handleSaveButton);
+        let createButton: HTMLInputElement = <HTMLInputElement>document.querySelector("#createButton");
+        createButton.addEventListener("click", handleCreateButton);
 
 
         drawBackground();
@@ -179,7 +182,7 @@ namespace CustomFirework {
             alert("Fill in Name!");
         }
         else {
-            if (checkList() == true) {
+            if (checkList(serverFirework) == true) {
                 console.log("Update List");
                 let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
                 let element: number = Number(position.value);
@@ -207,19 +210,26 @@ namespace CustomFirework {
         }
     }
 
-    function checkList(): Boolean {
+    function checkList(_fireworks: FireworkComponents[]): Boolean {
         let id: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
         let saved: Boolean = false;
-        for (let firework of serverFirework) {
-            if (saved == true) {
-                return saved;
-            }
-            else {
-                if (firework.id == id.value && currentFirework.name == firework.name) {
-                    saved = true;
+
+        if (_fireworks == undefined) {
+            saved = false;
+        }
+
+        else {
+            for (let firework of _fireworks) {
+                if (saved == true) {
+                    return saved;
                 }
                 else {
-                    saved = false;
+                    if (firework.id == id.value && currentFirework.name == firework.name) {
+                        saved = true;
+                    }
+                    else {
+                        saved = false;
+                    }
                 }
             }
         }
@@ -250,7 +260,7 @@ namespace CustomFirework {
             id = serverFirework[newElement].id;
             serverSaved = serverFirework[newElement].serverSaved;
 
-            let json: ServerFireworkComponents = ({name, colour, pattern, size, lifespan, id, serverSaved});
+            let json: ServerFireworkComponents = ({ name, colour, pattern, size, lifespan, id, serverSaved });
 
             let query: URLSearchParams = new URLSearchParams();
             query.set("command", _command);
@@ -278,8 +288,8 @@ namespace CustomFirework {
             id = serverFirework[newElement].id;
             serverSaved = serverFirework[newElement].serverSaved;
 
-            let json: ServerFireworkComponents = ({name, colour, pattern, size, lifespan, id, serverSaved});
-        
+            let json: ServerFireworkComponents = ({ name, colour, pattern, size, lifespan, id, serverSaved });
+
 
             let query: URLSearchParams = new URLSearchParams();
             query.set("command", _command);
@@ -287,7 +297,7 @@ namespace CustomFirework {
             query.set("data", JSON.stringify(json));
             let response: Response = await fetch(url + "?" + query.toString());
             let responseText: string = await response.text();
-     
+
             if (responseText.includes("success")) {
                 alert("Item added!");
             }
@@ -315,5 +325,48 @@ namespace CustomFirework {
 
         requestList();
 
+    }
+
+
+    function handleCreateButton(): void {
+        console.log("create Button!");
+        if (currentFirework.name == "") {
+            alert("Fill in Name!");
+        }
+        else {
+            if (checkList(localFirework) == true) {
+                console.log("Update Local List");
+                let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
+                let element: number = Number(position.value);
+                localFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id, serverSaved: true };
+                console.log(localFirework);
+                //wirteLocalList();
+                return;
+            }
+
+            else {
+                let name: string = currentFirework.name;
+                let colour: Colour = currentFirework.colour;
+                let pattern: Pattern = currentFirework.pattern;
+                let size: number = currentFirework.size;
+                let lifespan: number = currentFirework.lifespan;
+                let id: string = "local" + iLocalArray.toString();
+                let serverSaved: boolean = true;
+                iLocalArray++;
+
+                let htmlId: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
+                let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
+            
+                localFirework.push({ name, colour, pattern, size, lifespan, id, serverSaved });
+
+                htmlId.value = id;
+                position.value = (localFirework.length - 1).toString();
+                
+                console.log(localFirework);
+                //wirteLocalList();
+                return;
+            }
+
+        }
     }
 }

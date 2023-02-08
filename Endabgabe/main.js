@@ -7,11 +7,13 @@ var CustomFirework;
     let background;
     CustomFirework.url = "https://webuser.hs-furtwangen.de/~haiderna/Database/index.php";
     CustomFirework.fireworks = "FireworkPresets";
+    CustomFirework.localFirework = [];
     CustomFirework.explosives = [];
+    CustomFirework.iLocalArray = 0;
     CustomFirework.currentFirework = {
-        name: "Test",
+        name: "",
         colour: CustomFirework.colours[12],
-        pattern: CustomFirework.Pattern.cross,
+        pattern: CustomFirework.Pattern.circle,
         size: 0,
         lifespan: 0,
         id: "",
@@ -22,6 +24,8 @@ var CustomFirework;
         create.addEventListener("change", getInput);
         let save = document.querySelector("#save");
         save.addEventListener("click", handleSaveButton);
+        let createButton = document.querySelector("#createButton");
+        createButton.addEventListener("click", handleCreateButton);
         drawBackground();
         background = CustomFirework.cc2.getImageData(0, 0, CustomFirework.cc2.canvas.width, CustomFirework.cc2.canvas.height);
         getInput();
@@ -135,7 +139,7 @@ var CustomFirework;
             alert("Fill in Name!");
         }
         else {
-            if (checkList() == true) {
+            if (checkList(CustomFirework.serverFirework) == true) {
                 console.log("Update List");
                 let position = document.querySelector("#position");
                 let element = Number(position.value);
@@ -159,19 +163,24 @@ var CustomFirework;
             }
         }
     }
-    function checkList() {
+    function checkList(_fireworks) {
         let id = document.querySelector("#uniqueId");
         let saved = false;
-        for (let firework of CustomFirework.serverFirework) {
-            if (saved == true) {
-                return saved;
-            }
-            else {
-                if (firework.id == id.value && CustomFirework.currentFirework.name == firework.name) {
-                    saved = true;
+        if (_fireworks == undefined) {
+            saved = false;
+        }
+        else {
+            for (let firework of _fireworks) {
+                if (saved == true) {
+                    return saved;
                 }
                 else {
-                    saved = false;
+                    if (firework.id == id.value && CustomFirework.currentFirework.name == firework.name) {
+                        saved = true;
+                    }
+                    else {
+                        saved = false;
+                    }
                 }
             }
         }
@@ -249,6 +258,41 @@ var CustomFirework;
             }
         }
         requestList();
+    }
+    function handleCreateButton() {
+        console.log("create Button!");
+        if (CustomFirework.currentFirework.name == "") {
+            alert("Fill in Name!");
+        }
+        else {
+            if (checkList(CustomFirework.localFirework) == true) {
+                console.log("Update Local List");
+                let position = document.querySelector("#position");
+                let element = Number(position.value);
+                CustomFirework.localFirework[element] = { name: CustomFirework.currentFirework.name, colour: CustomFirework.currentFirework.colour, pattern: CustomFirework.currentFirework.pattern, size: CustomFirework.currentFirework.size, lifespan: CustomFirework.currentFirework.lifespan, id: CustomFirework.currentFirework.id, serverSaved: true };
+                console.log(CustomFirework.localFirework);
+                //wirteLocalList();
+                return;
+            }
+            else {
+                let name = CustomFirework.currentFirework.name;
+                let colour = CustomFirework.currentFirework.colour;
+                let pattern = CustomFirework.currentFirework.pattern;
+                let size = CustomFirework.currentFirework.size;
+                let lifespan = CustomFirework.currentFirework.lifespan;
+                let id = "local" + CustomFirework.iLocalArray.toString();
+                let serverSaved = true;
+                CustomFirework.iLocalArray++;
+                let htmlId = document.querySelector("#uniqueId");
+                let position = document.querySelector("#position");
+                CustomFirework.localFirework.push({ name, colour, pattern, size, lifespan, id, serverSaved });
+                htmlId.value = id;
+                position.value = (CustomFirework.localFirework.length - 1).toString();
+                console.log(CustomFirework.localFirework);
+                //wirteLocalList();
+                return;
+            }
+        }
     }
 })(CustomFirework || (CustomFirework = {}));
 //# sourceMappingURL=main.js.map
