@@ -44,7 +44,7 @@ namespace CustomFirework {
         createButton.addEventListener("click", handleCreateButton);
         let resetButton: HTMLInputElement = <HTMLInputElement>document.querySelector("#resetButton");
         resetButton.addEventListener("click", handleResetButton);
-        
+
         canvas.addEventListener("click", handleCanvasClick);
 
 
@@ -77,7 +77,6 @@ namespace CustomFirework {
             let serverSaved: boolean = value.serverSaved;
             serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
-        console.log(serverFirework);
         writeServerList();
     }
 
@@ -88,7 +87,7 @@ namespace CustomFirework {
 
         for (let index: number = 0; index < serverFirework.length; index++) {
 
-            list.innerHTML += "<li id=\"serverFirework" + index + "\">" + serverFirework[index].name + "</li>";
+            list.innerHTML += "<li id=\"serverFirework" + index + "\">" + serverFirework[index].name + "<img id=\"serverFireworkDelete" + index + "\" class=\"trash\" src=\"Ressources/trash.png\">" + "</li>";
 
         }
 
@@ -100,8 +99,9 @@ namespace CustomFirework {
         let id: string = (_event.target as Element).id;
 
         if (id.includes("localFirework")) {
-            if (id.includes("delete")) {
-                console.log("delete Item");
+            if (id.includes("Delete")) {
+                let newId: number = cutID(id, 19);
+                deleteFirework("localFirework", newId);
             }
             else {
                 let newId: number = cutID(id, 13);
@@ -110,8 +110,9 @@ namespace CustomFirework {
         }
         else if (id.includes("serverFirework")) {
 
-            if (id.includes("delete")) {
-                console.log("delete Item");
+            if (id.includes("Delete")) {
+                let newId: number = cutID(id, 20);
+                deleteFirework("serverFirework", newId);
             }
             else {
                 let newId: number = cutID(id, 14);
@@ -120,6 +121,21 @@ namespace CustomFirework {
         }
 
     }
+
+
+    function deleteFirework(_name: string, _element: number): void {
+        if (_name == "serverFirework") {
+            console.log("delete Element");
+            sendListElement("Defined" + _element, "delete");
+        }
+
+        else {
+            localFirework.splice(_element, 1);
+            wirteLocalList();
+        }
+    }
+
+
 
     function useFirework(_firework: FireworkComponents, _array: string, _position: number): void {
         let name: HTMLInputElement = <HTMLInputElement>document.querySelector("#name");
@@ -180,7 +196,6 @@ namespace CustomFirework {
         currentFirework.pattern = pattern;
         currentFirework.lifespan = Number(lifespan.value);
         currentFirework.size = Number(size.value);
-        console.log(currentFirework);
     }
 
     function drawBackground(): void {
@@ -317,10 +332,11 @@ namespace CustomFirework {
 
         else if (_element.includes("Defined") && _command == "delete") {
             let newElement: number = cutID(_element, 7);
+            console.log("Send List delete");
 
             let query: URLSearchParams = new URLSearchParams();
             query.set("command", _command);
-            query.set("collection", "Data");
+            query.set("collection", "Firework");
             query.set("id", serverFirework[newElement].id);
             let response: Response = await fetch(url + "?" + query.toString());
             let responseText: string = await response.text();
@@ -385,13 +401,12 @@ namespace CustomFirework {
 
 
     function wirteLocalList(): void {
-        console.log("Write Local List");
         let list: HTMLElement = <HTMLElement>document.querySelector("#uListLocal");
         list.innerHTML = "";
 
         for (let index: number = 0; index < localFirework.length; index++) {
 
-            list.innerHTML += "<li id=\"localFirework" + index + "\">" + localFirework[index].name + "</li>";
+            list.innerHTML += "<li id=\"localFirework" + index + "\">" + localFirework[index].name + "<img id=\"localFireworkDelete" + index + "\" class=\"trash\" src=\"Ressources/trash.png\">" + "</li>";
 
         }
 
@@ -406,7 +421,7 @@ namespace CustomFirework {
     }
 
 
-    function handleCanvasClick(_event: MouseEvent): void {    
+    function handleCanvasClick(_event: MouseEvent): void {
         if (currentFirework.pattern == Pattern.circle) {
             let position: Vector = new Vector(_event.clientX - cc2.canvas.offsetLeft, _event.clientY - cc2.canvas.offsetTop);
 
@@ -435,8 +450,8 @@ namespace CustomFirework {
     function update(): void {
         cc2.putImageData(background, 0, 0);
         console.log("update");
-        
-        for (let explosive of explosives) { 
+
+        for (let explosive of explosives) {
             explosive.explode();
             explosive.draw();
         }

@@ -55,14 +55,13 @@ var CustomFirework;
             let serverSaved = value.serverSaved;
             CustomFirework.serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
         }
-        console.log(CustomFirework.serverFirework);
         writeServerList();
     }
     function writeServerList() {
         let list = document.querySelector("#uListServer");
         list.innerHTML = "";
         for (let index = 0; index < CustomFirework.serverFirework.length; index++) {
-            list.innerHTML += "<li id=\"serverFirework" + index + "\">" + CustomFirework.serverFirework[index].name + "</li>";
+            list.innerHTML += "<li id=\"serverFirework" + index + "\">" + CustomFirework.serverFirework[index].name + "<img id=\"serverFireworkDelete" + index + "\" class=\"trash\" src=\"Ressources/trash.png\">" + "</li>";
         }
         let serverlist = document.querySelector("#serverList");
         serverlist.addEventListener("click", handleClick);
@@ -70,8 +69,9 @@ var CustomFirework;
     function handleClick(_event) {
         let id = _event.target.id;
         if (id.includes("localFirework")) {
-            if (id.includes("delete")) {
-                console.log("delete Item");
+            if (id.includes("Delete")) {
+                let newId = cutID(id, 19);
+                deleteFirework("localFirework", newId);
             }
             else {
                 let newId = cutID(id, 13);
@@ -79,13 +79,24 @@ var CustomFirework;
             }
         }
         else if (id.includes("serverFirework")) {
-            if (id.includes("delete")) {
-                console.log("delete Item");
+            if (id.includes("Delete")) {
+                let newId = cutID(id, 20);
+                deleteFirework("serverFirework", newId);
             }
             else {
                 let newId = cutID(id, 14);
                 useFirework(CustomFirework.serverFirework[newId], "serverFirework", newId);
             }
+        }
+    }
+    function deleteFirework(_name, _element) {
+        if (_name == "serverFirework") {
+            console.log("delete Element");
+            sendListElement("Defined" + _element, "delete");
+        }
+        else {
+            CustomFirework.localFirework.splice(_element, 1);
+            wirteLocalList();
         }
     }
     function useFirework(_firework, _array, _position) {
@@ -138,7 +149,6 @@ var CustomFirework;
         CustomFirework.currentFirework.pattern = pattern;
         CustomFirework.currentFirework.lifespan = Number(lifespan.value);
         CustomFirework.currentFirework.size = Number(size.value);
-        console.log(CustomFirework.currentFirework);
     }
     function drawBackground() {
         CustomFirework.cc2.beginPath();
@@ -257,9 +267,10 @@ var CustomFirework;
         }
         else if (_element.includes("Defined") && _command == "delete") {
             let newElement = cutID(_element, 7);
+            console.log("Send List delete");
             let query = new URLSearchParams();
             query.set("command", _command);
-            query.set("collection", "Data");
+            query.set("collection", "Firework");
             query.set("id", CustomFirework.serverFirework[newElement].id);
             let response = await fetch(CustomFirework.url + "?" + query.toString());
             let responseText = await response.text();
@@ -311,11 +322,10 @@ var CustomFirework;
         }
     }
     function wirteLocalList() {
-        console.log("Write Local List");
         let list = document.querySelector("#uListLocal");
         list.innerHTML = "";
         for (let index = 0; index < CustomFirework.localFirework.length; index++) {
-            list.innerHTML += "<li id=\"localFirework" + index + "\">" + CustomFirework.localFirework[index].name + "</li>";
+            list.innerHTML += "<li id=\"localFirework" + index + "\">" + CustomFirework.localFirework[index].name + "<img id=\"localFireworkDelete" + index + "\" class=\"trash\" src=\"Ressources/trash.png\">" + "</li>";
         }
         let serverlist = document.querySelector("#localList");
         serverlist.addEventListener("click", handleClick);

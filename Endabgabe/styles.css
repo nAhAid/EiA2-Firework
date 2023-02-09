@@ -10,3 +10,14 @@ main {
     justify-content: space-between;
 }
 
+.trash {
+    height: 20px;
+    /* padding: 2px  0px 0px 435px; */
+    opacity: 20%;
+}
+
+.trash:hover {
+    opacity: 100;
+}
+
+
