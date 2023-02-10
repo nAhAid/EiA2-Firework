@@ -1,74 +1,73 @@
-*
-{
+* {
     padding: 0px;
     margin: 0px;
 }
 
-html
-{
+html {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(179, 243, 245);
-    color:hsla(200, 98%, 17%, 1)
+    background-color: rgb(67, 129, 86);
+    color: rgb(255, 255, 255);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-header
-{
+
+header {
     margin: 5px;
     margin-bottom: 0px;
     position: relative;
     width: 1105px;
     text-align: center;
 }
-.Button 
-{
-    background-color: hsla(200, 60%, 38%, 0.618);
+
+.Button {
+    background-color: hsla(137, 20%, 28%, 0.865);
     border: none;
-    color: hsla(200, 98%, 17%, 1);
+    color: rgb(235, 238, 240);
     text-align: center;
     padding: 5px;
     margin: 5px;
     text-decoration: none;
     font-size: 16px;
 }
-#List_Server_Subheader
-{
+
+#List_Server_Subheader {
     text-align: left;
     position: absolute;
     height: 40px;
 }
-#uListServer
-{
+
+#uListServer {
     position: absolute;
     display: block;
     top: 40px;
     height: auto;
 }
-#List_Local_Subheader
-{
+
+#List_Local_Subheader {
     text-align: left;
     position: absolute;
     height: 40px;
 }
-#List_Local_Subheader_Title
-{
+
+#List_Local_Subheader_Title {
     position: absolute;
     left: 5px;
     width: 300px;
 }
-#resetButton
-{
+
+#resetButton {
     position: absolute;
     left: 640px;
     margin: 2px;
 }
-#uListLocal
-{
+
+#uListLocal {
     position: absolute;
     display: block;
     top: 40px;
     height: auto;
 }
-.grid_main
-{
+
+.grid_main {
     display: grid;
     position: relative;
     grid-template-columns: 300px 800px;
@@ -78,60 +77,61 @@ header
     margin: 5px;
     margin-top: 0px;
     width: 1105px;
-    background-color: rgb(155, 255, 230);
-    
+    background-color: rgb(104, 216, 85);
+
 }
-#Firework_Creation
-{
-   grid-column: 1 / span 1; 
-   grid-row: 1 / span 1;
-   background-color: hsla(200, 49%, 64%, 0.75);
-   padding: 5px;
-   position: relative;
+
+#Firework_Creation {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    background-color: hsla(200, 49%, 64%, 0.75);
+    padding: 5px;
+    position: relative;
 }
-#Canvas_Div
-{
-   grid-column: 2 / span 1; 
-   grid-row: 1 / span 1;
-   top: 0px;
-   left: 0px;
+
+#Canvas_Div {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+    top: 0px;
+    left: 0px;
 }
-#List_Server
-{
+
+#List_Server {
     display: inline-block;
     position: relative;
-    grid-column: 1 / span 1; 
+    grid-column: 1 / span 1;
     grid-row: 2 / span 1;
-    background-color: hsla(200, 49%, 64%, 0.75);;
+    background-color: hsla(200, 49%, 64%, 0.75);
+    ;
     padding: 5px;
     height: 30px;
 
 }
-#List_Local
-{
+
+#List_Local {
     display: inline-block;
     position: relative;
-    grid-column: 2 / span 1; 
+    grid-column: 2 / span 1;
     grid-row: 2 / span 1;
     background-color: hsla(200, 49%, 64%, 0.75);
     padding: 5px;
     height: 30px;
 
 }
-.trash
-{
+
+.trash {
     position: relative;
     top: 15px;
     height: 30px;
     width: 30px;
     cursor: pointer;
 }
-ul 
-{
+
+ul {
     list-style-type: none;
 }
-li
-{
+
+li {
     display: inline-block;
     height: auto;
     width: 100px;
@@ -139,13 +139,13 @@ li
     margin: 2px;
     cursor: pointer;
 }
-fieldset
-{
+
+fieldset {
     height: 75px;
     border-style: none;
 }
-.creation_info_element
-{
+
+.creation_info_element {
     display: inline-block;
     position: absolute;
     right: 10px;
@@ -154,18 +154,18 @@ fieldset
     background-color: hsla(200, 62%, 23%, 0.25);
     text-align: center;
 }
-#creation_current_size
-{
+
+#creation_current_size {
     text-align: left;
-    color:hsla(0, 0%, 0%, 0.5); 
+    color: hsla(0, 0%, 0%, 0.5);
 }
-#creation_current_lifespan
-{
+
+#creation_current_lifespan {
     text-align: right;
     color: hsla(0, 0%, 0%, 0.5);
 }
-.List_Info_Element
-{
+
+.List_Info_Element {
     display: inline-grid;
     position: relative;
     grid-template-areas: "title title" "info trash";
@@ -178,8 +178,8 @@ fieldset
     cursor: pointer;
 
 }
-.List_Name_Span
-{
+
+.List_Name_Span {
     grid-area: title;
     grid-column: 1 / span 2;
     width: 100px;
@@ -188,8 +188,8 @@ fieldset
     cursor: pointer;
 
 }
-.List_Preset_Element
-{
+
+.List_Preset_Element {
     position: absolute;
     grid-area: info;
     height: 50px;
@@ -198,24 +198,24 @@ fieldset
     text-align: center;
     cursor: pointer;
 }
-.List_Size_Span
-{
+
+.List_Size_Span {
     position: absolute;
     left: 0;
     text-align: left;
-    color:hsla(0, 0%, 0%, 0.5); 
+    color: hsla(0, 0%, 0%, 0.5);
     cursor: pointer;
 }
-.List_Duration_Span
-{
+
+.List_Duration_Span {
     position: absolute;
     right: 0;
     text-align: right;
     color: hsla(0, 0%, 0%, 0.5);
     cursor: pointer;
 }
-.List_Trash
-{
+
+.List_Trash {
     position: absolute;
     right: 0;
     text-align: center;
@@ -224,11 +224,23 @@ fieldset
     height: 50px;
     cursor: pointer;
 }
-.List_Pattern
-{
+
+.List_Pattern {
     position: relative;
     top: 15px;
     height: 30px;
     width: 30px;
     cursor: pointer;
+}
+
+
+input[type="range"] {
+    -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  height: 10px; /* Specified height */
+  background: #5cf10cce; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
 }

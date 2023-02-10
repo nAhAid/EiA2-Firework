@@ -100,7 +100,7 @@ namespace CustomFirework {
             newInfoDiv.append(newNameSpan);
 
             let newPresetDiv: HTMLDivElement = document.createElement("div");
-            newPresetDiv.style.backgroundColor = serverFirework[index].colour.name;
+            newPresetDiv.style.backgroundColor = serverFirework[index].colour.fColour;
             newPresetDiv.classList.add("List_Preset_Element");
             newInfoDiv.append(newPresetDiv);
 
@@ -120,8 +120,8 @@ namespace CustomFirework {
             newTrashSpan.classList.add("List_Trash");
             newInfoDiv.append(newTrashSpan);
 
-            newLi.append(newInfoDiv);            
-            
+            newLi.append(newInfoDiv);
+
             list.append(newLi);
         }
 
@@ -132,24 +132,20 @@ namespace CustomFirework {
     function handleClick(_event: MouseEvent): void {
         let target: Element = (_event.target as Element);
         let targetFound: boolean = false;
-        while(targetFound == false)
-        {
-            if (target.id.includes("Delete"))
-            {
+        while (targetFound == false) {
+            if (target.id.includes("Delete")) {
                 targetFound = true;
             }
             else
-            if(target.tagName == "LI")
-            {
-                targetFound = true;
-            }
-            else
-            {
-                target = target.parentElement;
-            }
+                if (target.tagName == "LI") {
+                    targetFound = true;
+                }
+                else {
+                    target = target.parentElement;
+                }
         }
         let id: string = target.id;
-        
+
 
         if (id.includes("localFirework")) {
             if (id.includes("Delete")) {
@@ -251,14 +247,17 @@ namespace CustomFirework {
         currentFirework.pattern = pattern;
         currentFirework.lifespan = Number(lifespan.value);
         currentFirework.size = Number(size.value);
-        let currentSize: HTMLSpanElement = document.querySelector("#creation_current_size");
+
+        let currentSize: HTMLSpanElement = <HTMLSpanElement>document.querySelector("#creation_current_size");
         currentSize.innerHTML = String(currentFirework.size);
-        let currentLifespan: HTMLSpanElement = document.querySelector("#creation_current_lifespan");
+        let currentLifespan: HTMLSpanElement = <HTMLSpanElement>document.querySelector("#creation_current_lifespan");
         currentLifespan.innerHTML = String(currentFirework.lifespan);
-        let currentColor: HTMLSpanElement = document.querySelector("#creation_current_color");
-        currentColor.style.backgroundColor = currentFirework.colour.name;
-        let currentPattern: HTMLSpanElement = document.querySelector("#creation_current_pattern");
+        let currentColor: HTMLSpanElement = <HTMLSpanElement>document.querySelector("#creation_current_color");
+        currentColor.style.backgroundColor = String(currentFirework.colour.fColour);
+        let currentPattern: HTMLSpanElement = <HTMLSpanElement>document.querySelector("#creation_current_pattern");
         currentPattern.innerHTML = "<img \" class=\"List_Pattern\" src=\"Ressources/" + String(currentFirework.pattern) + ".png\">";
+        lifespan.style.background = currentFirework.colour.fColour;
+        size.style.background = currentFirework.colour.fColour;
     }
 
     function drawBackground(): void {
@@ -480,7 +479,7 @@ namespace CustomFirework {
             newInfoDiv.append(newNameSpan);
 
             let newPresetDiv: HTMLDivElement = document.createElement("div");
-            newPresetDiv.style.backgroundColor = localFirework[index].colour.name;
+            newPresetDiv.style.backgroundColor = localFirework[index].colour.fColour;
             newPresetDiv.classList.add("List_Preset_Element");
             newInfoDiv.append(newPresetDiv);
 
@@ -500,8 +499,8 @@ namespace CustomFirework {
             newTrashSpan.classList.add("List_Trash");
             newInfoDiv.append(newTrashSpan);
 
-            newLi.append(newInfoDiv);            
-            
+            newLi.append(newInfoDiv);
+
             list.append(newLi);
 
         }
@@ -559,8 +558,7 @@ namespace CustomFirework {
                 explosives.splice(i, 1);
         }
     }
-    export function randomBetween(min: number, max: number): number
-    {
+    export function randomBetween(min: number, max: number): number {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
