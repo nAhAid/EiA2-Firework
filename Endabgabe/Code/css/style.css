@@ -5,8 +5,8 @@
 
 html {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(67, 129, 86);
-    color: rgb(255, 255, 255);
+    background-color: rgb(113, 184, 134);
+    color: rgb(0, 0, 0);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -19,9 +19,9 @@ header {
 }
 
 .Button {
-    background-color: hsla(137, 20%, 28%, 0.865);
+    background-color: hsla(137, 65%, 67%, 0.865);
     border: none;
-    color: rgb(235, 238, 240);
+    color: rgb(67, 81, 69);
     text-align: center;
     padding: 5px;
     margin: 5px;
@@ -77,14 +77,14 @@ header {
     margin: 5px;
     margin-top: 0px;
     width: 1105px;
-    background-color: rgb(104, 216, 85);
+    background-color: rgb(37, 156, 16);
 
 }
 
 #Firework_Creation {
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
-    background-color: hsla(200, 49%, 64%, 0.75);
+    background-color: hsla(109, 93%, 78%, 0.555);
     padding: 5px;
     position: relative;
 }
@@ -101,7 +101,7 @@ header {
     position: relative;
     grid-column: 1 / span 1;
     grid-row: 2 / span 1;
-    background-color: hsla(200, 49%, 64%, 0.75);
+    background-color: hsla(109, 93%, 78%, 0.555);
     ;
     padding: 5px;
     height: 30px;
@@ -113,7 +113,7 @@ header {
     position: relative;
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
-    background-color: hsla(200, 49%, 64%, 0.75);
+    background-color: hsla(109, 93%, 78%, 0.555);
     padding: 5px;
     height: 30px;
 
@@ -135,7 +135,7 @@ li {
     display: inline-block;
     height: auto;
     width: 100px;
-    background-color: hsla(200, 62%, 23%, 0.25);
+    background-color: hsla(138, 29%, 44%, 0.522);
     margin: 2px;
     cursor: pointer;
 }
@@ -151,7 +151,7 @@ fieldset {
     right: 10px;
     height: 50px;
     width: 50px;
-    background-color: hsla(200, 62%, 23%, 0.25);
+    background-color: hsla(109, 88%, 77%, 0.772);
     text-align: center;
 }
 
