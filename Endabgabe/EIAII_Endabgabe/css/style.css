@@ -1,0 +1,234 @@
+*
+{
+    padding: 0px;
+    margin: 0px;
+}
+
+html
+{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(179, 243, 245);
+    color:hsla(200, 98%, 17%, 1)
+}
+header
+{
+    margin: 5px;
+    margin-bottom: 0px;
+    position: relative;
+    width: 1105px;
+    text-align: center;
+}
+.Button 
+{
+    background-color: hsla(200, 60%, 38%, 0.618);
+    border: none;
+    color: hsla(200, 98%, 17%, 1);
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+#List_Server_Subheader
+{
+    text-align: left;
+    position: absolute;
+    height: 40px;
+}
+#uListServer
+{
+    position: absolute;
+    display: block;
+    top: 40px;
+    height: auto;
+}
+#List_Local_Subheader
+{
+    text-align: left;
+    position: absolute;
+    height: 40px;
+}
+#List_Local_Subheader_Title
+{
+    position: absolute;
+    left: 5px;
+    width: 300px;
+}
+#resetButton
+{
+    position: absolute;
+    left: 640px;
+    margin: 2px;
+}
+#uListLocal
+{
+    position: absolute;
+    display: block;
+    top: 40px;
+    height: auto;
+}
+.grid_main
+{
+    display: grid;
+    position: relative;
+    grid-template-columns: 300px 800px;
+    grid-template-rows: 550px auto;
+    column-gap: 5px;
+    row-gap: 5px;
+    margin: 5px;
+    margin-top: 0px;
+    width: 1105px;
+    background-color: rgb(155, 255, 230);
+    
+}
+#Firework_Creation
+{
+   grid-column: 1 / span 1; 
+   grid-row: 1 / span 1;
+   background-color: hsla(200, 49%, 64%, 0.75);
+   padding: 5px;
+   position: relative;
+}
+#Canvas_Div
+{
+   grid-column: 2 / span 1; 
+   grid-row: 1 / span 1;
+   top: 0px;
+   left: 0px;
+}
+#List_Server
+{
+    display: inline-block;
+    position: relative;
+    grid-column: 1 / span 1; 
+    grid-row: 2 / span 1;
+    background-color: hsla(200, 49%, 64%, 0.75);;
+    padding: 5px;
+    height: 30px;
+
+}
+#List_Local
+{
+    display: inline-block;
+    position: relative;
+    grid-column: 2 / span 1; 
+    grid-row: 2 / span 1;
+    background-color: hsla(200, 49%, 64%, 0.75);
+    padding: 5px;
+    height: 30px;
+
+}
+.trash
+{
+    position: relative;
+    top: 15px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+ul 
+{
+    list-style-type: none;
+}
+li
+{
+    display: inline-block;
+    height: auto;
+    width: 100px;
+    background-color: hsla(200, 62%, 23%, 0.25);
+    margin: 2px;
+    cursor: pointer;
+}
+fieldset
+{
+    height: 75px;
+    border-style: none;
+}
+.creation_info_element
+{
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    height: 50px;
+    width: 50px;
+    background-color: hsla(200, 62%, 23%, 0.25);
+    text-align: center;
+}
+#creation_current_size
+{
+    text-align: left;
+    color:hsla(0, 0%, 0%, 0.5); 
+}
+#creation_current_lifespan
+{
+    text-align: right;
+    color: hsla(0, 0%, 0%, 0.5);
+}
+.List_Info_Element
+{
+    display: inline-grid;
+    position: relative;
+    grid-template-areas: "title title" "info trash";
+    grid-template-columns: auto auto;
+    grid-template-rows: auto 50px;
+    column-gap: 2px;
+    row-gap: 2px;
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+
+}
+.List_Name_Span
+{
+    grid-area: title;
+    grid-column: 1 / span 2;
+    width: 100px;
+    height: auto;
+    word-break: break-all;
+    cursor: pointer;
+
+}
+.List_Preset_Element
+{
+    position: absolute;
+    grid-area: info;
+    height: 50px;
+    width: 50px;
+    background-color: hsla(200, 62%, 23%, 0.25);
+    text-align: center;
+    cursor: pointer;
+}
+.List_Size_Span
+{
+    position: absolute;
+    left: 0;
+    text-align: left;
+    color:hsla(0, 0%, 0%, 0.5); 
+    cursor: pointer;
+}
+.List_Duration_Span
+{
+    position: absolute;
+    right: 0;
+    text-align: right;
+    color: hsla(0, 0%, 0%, 0.5);
+    cursor: pointer;
+}
+.List_Trash
+{
+    position: absolute;
+    right: 0;
+    text-align: center;
+    grid-area: trash;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+.List_Pattern
+{
+    position: relative;
+    top: 15px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}

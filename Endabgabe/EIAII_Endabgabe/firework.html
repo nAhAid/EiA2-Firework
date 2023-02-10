@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="Vector.js" defer=""></script>
+    <script src="Colour.js" defer=""></script>
+    <script src="Pattern.js" defer=""></script>
+    <script src="FireworkComponents.js" defer=""></script>
+    <script src="Firework.js" defer=""></script>
+    <script src="Circle.js" defer=""></script>
+    <script src="Star.js" defer=""></script>
+    <script src="Cross.js" defer=""></script>
+    <script src="main.js" defer=""></script>
+    <title>Firework</title>
+</head>
+<body>
+
+    <header>
+        <h1>Let there be light!</h1>
+    </header>
+
+    <main>
+        <div class="grid_main">
+            <div id="Firework_Creation">
+                <h2>Create your Firework!</h2>
+                <fieldset>
+                    <legend>Preset Name</legend>
+                    <input type="text" name="Name" id="name" placeholder="Enter Name here" required />
+                </fieldset>
+
+                <fieldset>
+                    <label for="colours">Choose a colour:</label>
+
+                    <select name="colours" id="colours">
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="white">White</option>
+                    <option value="yellow">Yellow</option>
+                    </select> 
+                    <span class="creation_info_element" id="creation_current_color"></span>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Select a pattern:</legend>
+                    <input type="radio" id="circle" name="pattern" value="circle" checked>
+                    <label for="circle">Circle</label>
+
+                    <input type="radio" id="star" name="pattern" value="star">
+                    <label for="star">Star</label>
+
+                    <input type="radio" id="cross" name="pattern" value="cross">
+                    <label for="cross">Cross</label>
+                    <span class="creation_info_element" id="creation_current_pattern"></span>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Select Particle Size:</legend>
+                    <span>10</span>
+                    <input type="range" min="10" max="50" value="25" class="slider" id="size">
+                    <span>50</span>
+                    <span class="creation_info_element" id="creation_current_size"></span>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Select Firework Duration:</legend>
+                    <span>5</span>
+                    <input type="range" min="5" max="15" value="5" class="slider" id="lifespan">
+                    <span>15</span>
+                    <span class="creation_info_element" id="creation_current_lifespan"></span>
+                </fieldset>
+
+                <div>
+                    <input type="hidden"  value="" id="position">
+                    <input type="hidden"  value="" id="uniqueId">
+                </div>
+        
+
+                <div>
+                    <input class="Button" type="button" value="Create Local Preset" id="createButton"> 
+                    <input class="Button" type="button" value="Save Preset to Server" id="save"> 
+
+                </div>
+
+
+            </div>
+
+            <div id="Canvas_Div">
+                <canvas width="800" height="550"></canvas>
+            </div>
+
+            <div id="List_Server">
+                <p>Firework Presets on Server</p>
+                <ul id="uListServer">
+
+                </ul>
+            </div>
+
+            <div id="List_Local">
+                <div id = "List_Local_Subheader">
+                    <p id="List_Local_Subheader_Title">Local Firework Presets</p>
+                    <input class="Button" type="button" id="resetButton" value="Reset Local Presets">
+                </div>
+                <ul id="uListLocal">
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    
+</body>
+</html>

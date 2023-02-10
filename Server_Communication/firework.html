@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="Vector.js" defer=""></script>
+    <script src="Colour.js" defer=""></script>
+    <script src="Pattern.js" defer=""></script>
+    <script src="FireworkComponents.js" defer=""></script>
+    <script src="Firework.js" defer=""></script>
+    <script src="Circle.js" defer=""></script>
+    <script src="Star.js" defer=""></script>
+    <script src="Cross.js" defer=""></script>
+    <script src="main.js" defer=""></script>
+    <title>Firework</title>
+</head>
+<body>
+
+    <header>
+        <h1>Firework!</h1>
+    </header>
+
+    <main>
+        <div id="create">
+            <h2>Create your Firework!</h2>
+            <fieldset>
+                <legend>Product</legend>
+                <input type="text" name="Name" id="name" placeholder="Enter Name here" required />
+            </fieldset>
+
+            <fieldset>
+                <label for="colours">Choose a colour:</label>
+
+                <select name="colours" id="colours">
+                  <option value="red">Red</option>
+                  <option value="blue">Blue</option>
+                  <option value="green">Green</option>
+                  <option value="white">White</option>
+                  <option value="yellow">Yellow</option>
+                </select> 
+            </fieldset>
+
+            <fieldset>
+                <legend>Select a pattern:</legend>
+                <input type="radio" id="circle" name="pattern" value="circle" checked>
+                <label for="circle">Circle</label>
+
+                <input type="radio" id="star" name="pattern" value="star">
+                <label for="star">Star</label>
+
+                <input type="radio" id="cross" name="pattern" value="cross">
+                <label for="cross">Cross</label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Select Particle Size:</legend>
+                <input type="range" min="10" max="100" value="50" class="slider" id="size">
+            </fieldset>
+
+            <fieldset>
+                <legend>Select Firework Duration:</legend>
+                <input type="range" min="5" max="50" value="50" class="slider" id="lifespan">
+            </fieldset>
+
+            <div>
+                <input type="hidden"  value="" id="position">
+                <input type="hidden"  value="" id="uniqueId">
+            </div>
+    
+
+            <div>
+                <input type="button" value="Create" id="createButton"> 
+                <input type="button" value="Save Firework" id="save"> 
+
+            </div>
+
+
+        </div>
+
+        <div>
+            <canvas width="800" height="550"></canvas>
+        </div>
+
+        <div id="serverList">
+            <p>Server List placeholder</p>
+            <ul id="uListServer">
+
+            </ul>
+        </div>
+
+        <div id="localList">
+            <p>Local List placeholder</p>
+            <ul id="uListLocal">
+
+            </ul>
+            <div>
+                <input type="button" id="resetButton" value="Reset">
+            </div>
+        </div>
+
+    </main>
+
+    
+</body>
+</html>
