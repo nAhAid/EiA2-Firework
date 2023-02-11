@@ -16,8 +16,7 @@ var CustomFirework;
         pattern: CustomFirework.Pattern.circle,
         size: 0,
         lifespan: 0,
-        id: "",
-        serverSaved: false
+        id: ""
     };
     async function handleLoad() {
         let create = document.getElementById("Firework_Creation");
@@ -52,8 +51,7 @@ var CustomFirework;
             let size = value.size;
             let lifespan = value.lifespan;
             let id = key;
-            let serverSaved = value.serverSaved;
-            CustomFirework.serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
+            CustomFirework.serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id });
         }
         writeServerList();
     }
@@ -61,7 +59,6 @@ var CustomFirework;
         let list = document.querySelector("#uListServer");
         list.innerHTML = "";
         for (let index = 0; index < CustomFirework.serverFirework.length; index++) {
-            //list.innerHTML += "<li id=\"serverFirework" + index + "\">" + serverFirework[index].name + "<img id=\"serverFireworkDelete" + index + "\" class=\"trash\" src=\"Ressources/trash.png\">" + "</li>";
             let newLi = document.createElement("li");
             newLi.setAttribute("id", "serverFirework" + String(index));
             let newInfoDiv = document.createElement("div");
@@ -172,7 +169,6 @@ var CustomFirework;
         CustomFirework.currentFirework.size = _firework.size;
         CustomFirework.currentFirework.lifespan = _firework.lifespan;
         CustomFirework.currentFirework.id = _firework.id;
-        CustomFirework.currentFirework.serverSaved = _firework.serverSaved;
     }
     function cutID(_id, _length) {
         let newId = _id.slice(_length);
@@ -218,7 +214,7 @@ var CustomFirework;
                 console.log("Update List");
                 let position = document.querySelector("#position");
                 let element = Number(position.value);
-                CustomFirework.serverFirework[element] = { name: CustomFirework.currentFirework.name, colour: CustomFirework.currentFirework.colour, pattern: CustomFirework.currentFirework.pattern, size: CustomFirework.currentFirework.size, lifespan: CustomFirework.currentFirework.lifespan, id: CustomFirework.currentFirework.id, serverSaved: true };
+                CustomFirework.serverFirework[element] = { name: CustomFirework.currentFirework.name, colour: CustomFirework.currentFirework.colour, pattern: CustomFirework.currentFirework.pattern, size: CustomFirework.currentFirework.size, lifespan: CustomFirework.currentFirework.lifespan, id: CustomFirework.currentFirework.id };
                 console.log(CustomFirework.serverFirework);
                 sendListElement("Defined" + element, "update");
                 return;
@@ -230,8 +226,7 @@ var CustomFirework;
                 let size = CustomFirework.currentFirework.size;
                 let lifespan = CustomFirework.currentFirework.lifespan;
                 let id = CustomFirework.currentFirework.id;
-                let serverSaved = true;
-                CustomFirework.serverFirework.push({ name, colour, pattern, size, lifespan, id, serverSaved });
+                CustomFirework.serverFirework.push({ name, colour, pattern, size, lifespan, id });
                 console.log(CustomFirework.serverFirework);
                 sendListElement("Undefined", "insert");
                 return;
@@ -268,7 +263,6 @@ var CustomFirework;
         let size;
         let lifespan;
         let id;
-        let serverSaved;
         if (_element.includes("Defined") && _command != "delete") {
             let newElement = cutID(_element, 7);
             name = CustomFirework.serverFirework[newElement].name;
@@ -277,8 +271,7 @@ var CustomFirework;
             size = CustomFirework.serverFirework[newElement].size;
             lifespan = CustomFirework.serverFirework[newElement].lifespan;
             id = CustomFirework.serverFirework[newElement].id;
-            serverSaved = CustomFirework.serverFirework[newElement].serverSaved;
-            let json = ({ name, colour, pattern, size, lifespan, id, serverSaved });
+            let json = ({ name, colour, pattern, size, lifespan, id });
             let query = new URLSearchParams();
             query.set("command", _command);
             query.set("collection", "Firework");
@@ -302,8 +295,7 @@ var CustomFirework;
             size = CustomFirework.serverFirework[newElement].size;
             lifespan = CustomFirework.serverFirework[newElement].lifespan;
             id = CustomFirework.serverFirework[newElement].id;
-            serverSaved = CustomFirework.serverFirework[newElement].serverSaved;
-            let json = ({ name, colour, pattern, size, lifespan, id, serverSaved });
+            let json = ({ name, colour, pattern, size, lifespan, id });
             let query = new URLSearchParams();
             query.set("command", _command);
             query.set("collection", "Firework");
@@ -342,14 +334,12 @@ var CustomFirework;
         }
         else {
             if (checkList(CustomFirework.localFirework) == true) {
-                console.log("Update Local List");
                 let position = document.querySelector("#position");
                 let htmlId = document.querySelector("#uniqueId");
                 let element = Number(position.value);
-                CustomFirework.localFirework[element] = { name: CustomFirework.currentFirework.name, colour: CustomFirework.currentFirework.colour, pattern: CustomFirework.currentFirework.pattern, size: CustomFirework.currentFirework.size, lifespan: CustomFirework.currentFirework.lifespan, id: CustomFirework.currentFirework.id, serverSaved: true };
+                CustomFirework.localFirework[element] = { name: CustomFirework.currentFirework.name, colour: CustomFirework.currentFirework.colour, pattern: CustomFirework.currentFirework.pattern, size: CustomFirework.currentFirework.size, lifespan: CustomFirework.currentFirework.lifespan, id: CustomFirework.currentFirework.id };
                 htmlId.value = CustomFirework.currentFirework.id;
-                position.value = (CustomFirework.localFirework.length - 1).toString();
-                console.log(CustomFirework.localFirework);
+                position.value = (element).toString();
                 wirteLocalList();
                 return;
             }
@@ -360,14 +350,12 @@ var CustomFirework;
                 let size = CustomFirework.currentFirework.size;
                 let lifespan = CustomFirework.currentFirework.lifespan;
                 let id = "local" + CustomFirework.iLocalArray.toString();
-                let serverSaved = true;
                 CustomFirework.iLocalArray++;
                 let htmlId = document.querySelector("#uniqueId");
                 let position = document.querySelector("#position");
-                CustomFirework.localFirework.push({ name, colour, pattern, size, lifespan, id, serverSaved });
+                CustomFirework.localFirework.push({ name, colour, pattern, size, lifespan, id });
                 htmlId.value = id;
                 position.value = (CustomFirework.localFirework.length - 1).toString();
-                console.log(CustomFirework.localFirework);
                 wirteLocalList();
                 return;
             }
@@ -410,6 +398,7 @@ var CustomFirework;
     }
     function handleResetButton() {
         CustomFirework.localFirework = [];
+        CustomFirework.iLocalArray = 0;
         wirteLocalList();
     }
     function handleCanvasClick(_event) {

@@ -31,11 +31,10 @@ namespace CustomFirework {
         pattern: Pattern.circle,
         size: 0,
         lifespan: 0,
-        id: "",
-        serverSaved: false
+        id: ""
     };
 
-    async function handleLoad() {
+    async function handleLoad(): Promise<void> {
         let create: HTMLDivElement = <HTMLDivElement>document.getElementById("Firework_Creation");
         create.addEventListener("change", getInput);
         let save: HTMLInputElement = <HTMLInputElement>document.querySelector("#save");
@@ -74,8 +73,7 @@ namespace CustomFirework {
             let size: number = value.size;
             let lifespan: number = value.lifespan;
             let id: string = key;
-            let serverSaved: boolean = value.serverSaved;
-            serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id, serverSaved: serverSaved });
+            serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id});
         }
         writeServerList();
     }
@@ -86,8 +84,6 @@ namespace CustomFirework {
         list.innerHTML = "";
 
         for (let index: number = 0; index < serverFirework.length; index++) {
-
-            //list.innerHTML += "<li id=\"serverFirework" + index + "\">" + serverFirework[index].name + "<img id=\"serverFireworkDelete" + index + "\" class=\"trash\" src=\"Ressources/trash.png\">" + "</li>";
 
             let newLi: HTMLLIElement = document.createElement("li");
             newLi.setAttribute("id", "serverFirework" + String(index));
@@ -222,7 +218,7 @@ namespace CustomFirework {
         currentFirework.size = _firework.size;
         currentFirework.lifespan = _firework.lifespan;
         currentFirework.id = _firework.id;
-        currentFirework.serverSaved = _firework.serverSaved;
+        
     }
 
 
@@ -277,7 +273,7 @@ namespace CustomFirework {
                 console.log("Update List");
                 let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
                 let element: number = Number(position.value);
-                serverFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id, serverSaved: true };
+                serverFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id };
                 console.log(serverFirework);
                 sendListElement("Defined" + element, "update");
                 return;
@@ -290,9 +286,8 @@ namespace CustomFirework {
                 let size: number = currentFirework.size;
                 let lifespan: number = currentFirework.lifespan;
                 let id: string = currentFirework.id;
-                let serverSaved: boolean = true;
 
-                serverFirework.push({ name, colour, pattern, size, lifespan, id, serverSaved });
+                serverFirework.push({ name, colour, pattern, size, lifespan, id });
                 console.log(serverFirework);
                 sendListElement("Undefined", "insert");
                 return;
@@ -333,8 +328,6 @@ namespace CustomFirework {
         let size: number;
         let lifespan: number;
         let id: string;
-        let serverSaved: boolean;
-
 
         if (_element.includes("Defined") && _command != "delete") {
             let newElement: number = cutID(_element, 7);
@@ -344,9 +337,8 @@ namespace CustomFirework {
             size = serverFirework[newElement].size;
             lifespan = serverFirework[newElement].lifespan;
             id = serverFirework[newElement].id;
-            serverSaved = serverFirework[newElement].serverSaved;
 
-            let json: ServerFireworkComponents = ({ name, colour, pattern, size, lifespan, id, serverSaved });
+            let json: ServerFireworkComponents = ({ name, colour, pattern, size, lifespan, id });
 
             let query: URLSearchParams = new URLSearchParams();
             query.set("command", _command);
@@ -372,9 +364,9 @@ namespace CustomFirework {
             size = serverFirework[newElement].size;
             lifespan = serverFirework[newElement].lifespan;
             id = serverFirework[newElement].id;
-            serverSaved = serverFirework[newElement].serverSaved;
+     
 
-            let json: ServerFireworkComponents = ({ name, colour, pattern, size, lifespan, id, serverSaved });
+            let json: ServerFireworkComponents = ({ name, colour, pattern, size, lifespan, id });
 
 
             let query: URLSearchParams = new URLSearchParams();
@@ -421,17 +413,15 @@ namespace CustomFirework {
         }
         else {
             if (checkList(localFirework) == true) {
-                console.log("Update Local List");
                 let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
                 let htmlId: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
                 let element: number = Number(position.value);
 
-                localFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id, serverSaved: true };
+                localFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id};
 
                 htmlId.value = currentFirework.id;
-                position.value = (localFirework.length - 1).toString();
+                position.value = (element).toString();
 
-                console.log(localFirework);
                 wirteLocalList();
                 return;
             }
@@ -443,18 +433,16 @@ namespace CustomFirework {
                 let size: number = currentFirework.size;
                 let lifespan: number = currentFirework.lifespan;
                 let id: string = "local" + iLocalArray.toString();
-                let serverSaved: boolean = true;
                 iLocalArray++;
 
                 let htmlId: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
                 let position: HTMLInputElement = <HTMLInputElement>document.querySelector("#position");
 
-                localFirework.push({ name, colour, pattern, size, lifespan, id, serverSaved });
+                localFirework.push({ name, colour, pattern, size, lifespan, id });
 
                 htmlId.value = id;
                 position.value = (localFirework.length - 1).toString();
 
-                console.log(localFirework);
                 wirteLocalList();
                 return;
             }
@@ -512,6 +500,7 @@ namespace CustomFirework {
 
     function handleResetButton(): void {
         localFirework = [];
+        iLocalArray = 0;
         wirteLocalList();
     }
 

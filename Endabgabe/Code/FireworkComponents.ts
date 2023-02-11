@@ -7,7 +7,6 @@ namespace CustomFirework {
         size: number;
         lifespan: number;
         id: string;
-        serverSaved: boolean;
     }
     export interface ServerFireworkComponents {
         name: string;
@@ -16,7 +15,6 @@ namespace CustomFirework {
         size: number;
         lifespan: number;
         id: string;
-        serverSaved: boolean;
     }
 
     
