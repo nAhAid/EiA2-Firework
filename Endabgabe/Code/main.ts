@@ -1,3 +1,11 @@
+/*
+ Aufgabe: Fireworks_Endabgabe
+ Name: Natan Haider
+ Matrikel: 271129
+ Datum: 12.02.2023
+ Quellen: Daniel Meier, Dennis Grützmacher, Henning Reck
+*/
+
 namespace CustomFirework {
     window.addEventListener("load", handleLoad);
 
@@ -73,7 +81,7 @@ namespace CustomFirework {
             let size: number = value.size;
             let lifespan: number = value.lifespan;
             let id: string = key;
-            serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id});
+            serverFirework.push({ name: name, colour: colour, pattern: pattern, size: size, lifespan: lifespan, id: id });
         }
         writeServerList();
     }
@@ -218,7 +226,7 @@ namespace CustomFirework {
         currentFirework.size = _firework.size;
         currentFirework.lifespan = _firework.lifespan;
         currentFirework.id = _firework.id;
-        
+
     }
 
 
@@ -364,7 +372,7 @@ namespace CustomFirework {
             size = serverFirework[newElement].size;
             lifespan = serverFirework[newElement].lifespan;
             id = serverFirework[newElement].id;
-     
+
 
             let json: ServerFireworkComponents = ({ name, colour, pattern, size, lifespan, id });
 
@@ -417,7 +425,7 @@ namespace CustomFirework {
                 let htmlId: HTMLInputElement = <HTMLInputElement>document.querySelector("#uniqueId");
                 let element: number = Number(position.value);
 
-                localFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id};
+                localFirework[element] = { name: currentFirework.name, colour: currentFirework.colour, pattern: currentFirework.pattern, size: currentFirework.size, lifespan: currentFirework.lifespan, id: currentFirework.id };
 
                 htmlId.value = currentFirework.id;
                 position.value = (element).toString();
