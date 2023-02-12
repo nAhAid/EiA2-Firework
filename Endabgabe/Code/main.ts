@@ -1,7 +1,7 @@
 /*
  Aufgabe: Fireworks_Endabgabe
  Name: Natan Haider
- Matrikel: 271129
+ Matrikel: 271115
  Datum: 12.02.2023
  Quellen: Daniel Meier, Dennis Grützmacher, Henning Reck
 */
